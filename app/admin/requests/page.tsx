@@ -1,0 +1,1 @@
+import ManagementPage from "@/components/admin/ManagementPage"; export default function Page(){return <ManagementPage collection="requests" title="সদস্য আবেদন" description="নতুন সদস্যপদের আবেদন পর্যালোচনা করুন।" action="আবেদন যোগ করুন"/>}

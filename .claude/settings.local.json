@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node --input-type=module -e ' *)",
+      "Bash(nslookup -type=SRV _mongodb._tcp.cluster0.ma8jbz0.mongodb.net)",
+      "Bash(nslookup -type=SRV _mongodb._tcp.cluster0.ma8jbz0.mongodb.net 8.8.8.8)",
+      "Bash(nslookup -type=TXT cluster0.ma8jbz0.mongodb.net 8.8.8.8)",
+      "Bash(rm -f models/Gallery.ts \"app/api/gallery/upload/route.ts\")",
+      "Bash(rmdir \"app/api/gallery/upload\")",
+      "Bash(curl -s -c /tmp/ck2.txt -X POST http://localhost:3000/api/admin/login -H \"Content-Type: application/json\" -d '{\"email\":\"admin@gmail.com\",\"password\":\"12345678\"}' -o /dev/null -w \"login:%{http_code}\\\\n\")",
+      "Bash(curl -s -b /tmp/ck2.txt -X POST http://localhost:3000/api/admin/gallery -F \"title=শীতকালীন ক্যাম্প ২০২৬\" -F \"description=পরীক্ষামূলক ছবি\" -F \"status=published\" -F \"image=@public/images/rover-team.jpg;type=image/jpeg\" -w \"\\\\nSTATUS:%{http_code}\\\\n\")",
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "Bash(xargs -I{} echo \"MONGOOSE warnings in build output: {}\")",
+      "Bash(curl -s -o /dev/null -w \"  /no-such-page -> %{http_code}\\\\n\" http://localhost:3000/no-such-page)",
+      "Bash(curl -s -m 20 http://localhost:3000/)",
+      "Bash(git init *)",
+      "Bash(git config *)"
+    ]
+  }
+}

@@ -1,0 +1,1 @@
+import ManagementPage from "@/components/admin/ManagementPage"; export default function Page(){return <ManagementPage collection="messages" title="বার্তা" description="যোগাযোগ ফর্ম থেকে আসা বার্তা দেখুন।" action="বার্তা লিখুন"/>}

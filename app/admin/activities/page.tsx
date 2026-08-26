@@ -1,0 +1,1 @@
+import ManagementPage from "@/components/admin/ManagementPage"; export default function Page(){return <ManagementPage collection="activities" title="কার্যক্রম ব্যবস্থাপনা" description="রোভার কার্যক্রমের তথ্য প্রকাশ করুন।" action="কার্যক্রম যোগ করুন"/>}

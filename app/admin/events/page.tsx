@@ -1,0 +1,1 @@
+import ManagementPage from "@/components/admin/ManagementPage"; export default function Page(){return <ManagementPage collection="events" title="ইভেন্ট ব্যবস্থাপনা" description="আসন্ন ইভেন্ট তৈরি ও সম্পাদনা করুন।" action="নতুন ইভেন্ট"/>}

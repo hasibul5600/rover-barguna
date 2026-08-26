@@ -1,0 +1,115 @@
+/* ---------------------------------------------------------------------------
+   Extra polish that sits outside the design system in app/globals.css.
+   globals.css owns the tokens, buttons, fields and badges; this file holds the
+   decorative and typographic touches used by individual pages.
+   Imported from app/layout.tsx after globals.css.
+--------------------------------------------------------------------------- */
+
+/* Long-form Bengali body copy. Bengali needs a taller line-height than Latin
+   because of its matras, and hyphenation isn't available, so we avoid justify. */
+.prose-bn {
+  line-height: 2;
+  text-align: start;
+  overflow-wrap: break-word;
+}
+
+.prose-bn > * + * {
+  margin-top: 1rem;
+}
+
+.prose-bn strong {
+  color: var(--forest);
+  font-weight: 700;
+}
+
+.prose-bn a {
+  color: var(--leaf);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Soft radial wash behind the hero, sitting under the content. */
+.hero-glow {
+  position: relative;
+  isolation: isolate;
+}
+
+.hero-glow::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset-inline-start: 50%;
+  top: -18%;
+  width: min(70rem, 130%);
+  aspect-ratio: 1;
+  translate: -50% 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(23 112 84 / 0.1) 0%, rgb(23 112 84 / 0) 62%);
+  pointer-events: none;
+}
+
+/* Slow zoom on gallery thumbnails. The parent clips the overflow. */
+.zoom-parent {
+  overflow: hidden;
+}
+
+.zoom-img {
+  transition: transform 0.55s var(--ease-out-soft);
+  will-change: transform;
+}
+
+.zoom-parent:hover .zoom-img,
+.zoom-parent:focus-within .zoom-img {
+  transform: scale(1.06);
+}
+
+/* Underline that grows in from the left — for inline and footer links. */
+.link-underline {
+  position: relative;
+  text-decoration: none;
+}
+
+.link-underline::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: -2px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: currentColor;
+  scale: 0 1;
+  transform-origin: left center;
+  transition: scale 0.25s var(--ease-out-soft);
+}
+
+.link-underline:hover::after,
+.link-underline:focus-visible::after {
+  scale: 1 1;
+}
+
+/* Small gold rule used to separate sections. */
+.divider-gold {
+  height: 3px;
+  width: 3.5rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--gold), rgb(245 191 67 / 0.25));
+}
+
+/* Faint dotted texture for dark panels. */
+.texture-dots {
+  background-image: radial-gradient(rgb(255 255 255 / 0.16) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zoom-img,
+  .link-underline::after {
+    transition: none;
+  }
+
+  .zoom-parent:hover .zoom-img,
+  .zoom-parent:focus-within .zoom-img {
+    transform: none;
+  }
+}
