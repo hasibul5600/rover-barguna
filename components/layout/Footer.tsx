@@ -11,6 +11,7 @@ const QUICK_LINKS: Array<[string, string]> = [
 
 const GROUP_LINKS: Array<[string, string]> = [
   ["/leadership", "নেতৃত্ব ও সদস্য"],
+  ["/alumni", "প্রাক্তন সদস্য"],
   ["/join", "সদস্য হোন"],
   ["/contact", "যোগাযোগ"],
   ["/admin/login", "অ্যাডমিন লগইন"],

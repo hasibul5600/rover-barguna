@@ -1,5 +1,6 @@
-import MemberManager from "@/components/admin/MemberManager";
+import PeopleManager from "@/components/admin/PeopleManager";
+import { MEMBER_PEOPLE } from "@/lib/people";
 
 export default function MembersPage() {
-  return <MemberManager />;
+  return <PeopleManager config={MEMBER_PEOPLE} />;
 }

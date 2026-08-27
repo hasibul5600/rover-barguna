@@ -1,4 +1,4 @@
-import { DEPARTMENTS, type FieldSpec } from "@/lib/validators";
+import { BLOOD_GROUPS, DEPARTMENTS, type FieldSpec } from "@/lib/validators";
 
 /**
  * Membership applications submitted from the public /join form. Stored as
@@ -13,6 +13,7 @@ export type JoinRequestMeta = {
   department?: string;
   session?: string;
   roll?: string;
+  bloodGroup?: string;
 };
 
 /** Review states, in the order an application moves through them. */
@@ -41,6 +42,7 @@ export const JOIN_REQUEST_FIELDS: FieldSpec[] = [
   { name: "department", label: "বিভাগ", type: "select", options: DEPARTMENTS, inTable: true },
   { name: "session", label: "সেশন", type: "text", placeholder: "২০২৩-২৪" },
   { name: "roll", label: "রোল নম্বর", type: "text" },
+  { name: "bloodGroup", label: "রক্তের গ্রুপ", type: "select", options: BLOOD_GROUPS, inTable: true },
   { name: "phone", label: "মোবাইল", type: "tel", inTable: true },
   { name: "email", label: "ইমেইল", type: "email", inTable: true },
   { name: "description", label: "যোগদানের কারণ", type: "textarea" },

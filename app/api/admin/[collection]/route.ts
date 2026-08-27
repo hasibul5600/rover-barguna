@@ -7,7 +7,16 @@ import { deleteCloudinaryImage, uploadDataUrl, uploadImageFile } from "@/lib/clo
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
-const allowed = ["members", "requests", "events", "activities", "notices", "gallery", "messages"];
+const allowed = [
+  "members",
+  "exmembers",
+  "requests",
+  "events",
+  "activities",
+  "notices",
+  "gallery",
+  "messages",
+];
 
 /** Collections whose records are meaningless without a photo. */
 const imageRequired = new Set(["gallery"]);

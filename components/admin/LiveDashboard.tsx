@@ -56,10 +56,12 @@ const MINI: Array<{ key: keyof AdminStats; label: string; href: string; icon: st
   { key: "activities", label: "কার্যক্রম", href: "/admin/activities", icon: "🎯" },
   { key: "notices", label: "নোটিশ", href: "/admin/notices", icon: "📢" },
   { key: "gallery", label: "গ্যালারি ছবি", href: "/admin/gallery", icon: "🖼️" },
+  { key: "exmembers", label: "প্রাক্তন সদস্য", href: "/admin/exmembers", icon: "🎓" },
 ];
 
 const COLLECTION_LABELS: Record<string, { label: string; href: string; icon: string }> = {
   members: { label: "সদস্য", href: "/admin/members", icon: "👥" },
+  exmembers: { label: "প্রাক্তন সদস্য", href: "/admin/exmembers", icon: "🎓" },
   requests: { label: "আবেদন", href: "/admin/requests", icon: "📝" },
   events: { label: "ইভেন্ট", href: "/admin/events", icon: "📅" },
   activities: { label: "কার্যক্রম", href: "/admin/activities", icon: "🎯" },
@@ -211,7 +213,7 @@ export default function LiveDashboard({ initial }: { initial: AdminStats }) {
         ))}
       </section>
 
-      <section className="mt-4 grid gap-3 sm:grid-cols-3">
+      <section className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {MINI.map((mini) => (
           <Link
             key={mini.key}

@@ -86,8 +86,16 @@ export type JoinInput = {
   department: string;
   session: string;
   roll: string;
+  bloodGroup: string;
   reason: string;
 };
+
+/**
+ * Written in Latin letters on purpose — Bangladeshi medical forms, donor cards and
+ * hospital records all use "A+"/"O-", never a Bengali transliteration, so matching
+ * that keeps the value usable when the group organises a blood drive.
+ */
+export const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
 export const DEPARTMENTS = [
   "কম্পিউটার",
@@ -108,6 +116,7 @@ export function validateJoin(body: unknown): Validated<JoinInput> {
     department: text(raw.department),
     session: text(raw.session),
     roll: text(raw.roll),
+    bloodGroup: text(raw.bloodGroup),
     reason: text(raw.reason),
   };
 
@@ -124,6 +133,11 @@ export function validateJoin(body: unknown): Validated<JoinInput> {
 
   if (!data.department) errors.department = "বিভাগ নির্বাচন করুন।";
   else if (!DEPARTMENTS.includes(data.department)) errors.department = "তালিকা থেকে বিভাগ নির্বাচন করুন।";
+
+  // Optional — but a free-typed group is worse than none, so reject anything off-list.
+  if (data.bloodGroup && !BLOOD_GROUPS.includes(data.bloodGroup)) {
+    errors.bloodGroup = "তালিকা থেকে রক্তের গ্রুপ নির্বাচন করুন।";
+  }
 
   if (data.reason && data.reason.length > 1000) errors.reason = "১০০০ অক্ষরের মধ্যে লিখুন।";
 

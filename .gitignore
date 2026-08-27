@@ -16,11 +16,10 @@ next-env.d.ts
 
 # Environment files — NEVER commit these, they hold live credentials.
 # .env.example is the tracked template and is deliberately not ignored.
+# The glob (not a fixed list) so any *.local variant — including scratch files
+# made while copying values into a host's dashboard — is ignored by default.
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env*.local
 
 # Vercel
 .vercel

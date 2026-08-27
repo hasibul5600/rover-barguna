@@ -15,14 +15,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: firstError(result.errors), errors: result.errors }, { status: 400 });
   }
 
-  const { name, email, phone, department, session, roll, reason } = result.data;
+  const { name, email, phone, department, session, roll, bloodGroup, reason } = result.data;
 
   try {
     const id = await createSubmission(
       JOIN_REQUEST_COLLECTION,
       name,
       reason,
-      { email, phone, department, session, roll },
+      { email, phone, department, session, roll, bloodGroup },
       "new"
     );
     return NextResponse.json(

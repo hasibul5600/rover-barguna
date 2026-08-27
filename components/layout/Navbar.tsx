@@ -5,16 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
-
-const links: Array<[string, string]> = [
-  ["/", "হোম"],
-  ["/about", "আমাদের সম্পর্কে"],
-  ["/activities", "কার্যক্রম"],
-  ["/events", "ইভেন্ট"],
-  ["/notices", "নোটিশ"],
-  ["/gallery", "গ্যালারি"],
-  ["/contact", "যোগাযোগ"],
-];
+import { NAV_LINKS, isActiveNav } from "@/lib/nav";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -41,7 +32,7 @@ export default function Navbar() {
             alt="রোভার স্কাউট লোগো"
             width={46}
             height={46}
-            className="rounded-full ring-2 ring-[#f5bf43]/60"
+            className="shrink-0 rounded-full ring-2 ring-[#f5bf43]/60"
             priority
           />
           <span className="text-sm font-bold leading-tight text-[color:var(--forest)] sm:text-base">
@@ -51,23 +42,26 @@ export default function Navbar() {
           </span>
         </Link>
 
-        <ul className="hidden items-center gap-1 lg:flex">
-          {links.map(([href, label]) => {
-            const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
+        {/* Nine links, the two-line institute name and two buttons only fit from
+            xl up. Below that the drawer in <Sidebar /> takes over — at lg the row
+            used to squeeze until "আমাদের সম্পর্কে" wrapped onto two lines. */}
+        <ul className="hidden items-center gap-0.5 xl:flex">
+          {NAV_LINKS.map(({ href, label, short }) => {
+            const active = isActiveNav(pathname, href);
             return (
               <li key={href}>
                 <Link
                   href={href}
                   aria-current={active ? "page" : undefined}
-                  className={`relative rounded-full px-3 py-2 text-sm font-semibold transition ${
+                  className={`relative rounded-full px-2 py-2 text-sm font-semibold whitespace-nowrap transition ${
                     active
                       ? "text-[color:var(--forest)]"
                       : "text-slate-600 hover:bg-emerald-950/5 hover:text-[color:var(--leaf)]"
                   }`}
                 >
-                  {label}
+                  {short || label}
                   {active && (
-                    <span className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-[#f5bf43]" />
+                    <span className="absolute inset-x-2 -bottom-0.5 h-0.5 rounded-full bg-[#f5bf43]" />
                   )}
                 </Link>
               </li>
@@ -82,7 +76,7 @@ export default function Navbar() {
           >
             লগইন
           </Link>
-          <Link href="/join" className="btn-primary hidden text-sm sm:inline-flex">
+          <Link href="/join" className="btn-primary hidden text-sm whitespace-nowrap sm:inline-flex">
             সদস্য হোন →
           </Link>
           <Sidebar />

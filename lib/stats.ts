@@ -13,6 +13,7 @@ export type StatRecent = {
 export type AdminStats = {
   members: number;
   membersThisMonth: number;
+  exmembers: number;
   requests: number;
   requestsNew: number;
   events: number;
@@ -31,6 +32,7 @@ export type AdminStats = {
 export const EMPTY_STATS: AdminStats = {
   members: 0,
   membersThisMonth: 0,
+  exmembers: 0,
   requests: 0,
   requestsNew: 0,
   events: 0,
@@ -62,6 +64,7 @@ export async function loadAdminStats(): Promise<AdminStats> {
   const [
     members,
     membersThisMonth,
+    exmembers,
     requests,
     requestsNew,
     events,
@@ -75,6 +78,7 @@ export async function loadAdminStats(): Promise<AdminStats> {
   ] = await Promise.all([
     ContentItem.countDocuments({ collection: "members" }),
     ContentItem.countDocuments({ collection: "members", createdAt: { $gte: monthStart } }),
+    ContentItem.countDocuments({ collection: "exmembers" }),
     ContentItem.countDocuments({ collection: "requests" }),
     ContentItem.countDocuments({ collection: "requests", status: "new" }),
     ContentItem.countDocuments({ collection: "events" }),
@@ -93,6 +97,7 @@ export async function loadAdminStats(): Promise<AdminStats> {
   return {
     members,
     membersThisMonth,
+    exmembers,
     requests,
     requestsNew,
     events,

@@ -57,6 +57,7 @@ export const PUBLIC_ROUTES = [
   { path: "/notices", changeFrequency: "weekly", priority: 0.9 },
   { path: "/gallery", changeFrequency: "monthly", priority: 0.7 },
   { path: "/leadership", changeFrequency: "yearly", priority: 0.7 },
+  { path: "/alumni", changeFrequency: "yearly", priority: 0.6 },
   { path: "/join", changeFrequency: "yearly", priority: 0.9 },
   { path: "/contact", changeFrequency: "yearly", priority: 0.6 },
 ] as const;

@@ -3,9 +3,9 @@
 import { useState } from "react";
 import Button from "@/components/ui/Button";
 import Input, { FormNotice, Select, Textarea } from "@/components/ui/Input";
-import { DEPARTMENTS, type FieldErrors } from "@/lib/validators";
+import { BLOOD_GROUPS, DEPARTMENTS, type FieldErrors } from "@/lib/validators";
 
-const BLANK = { name: "", email: "", phone: "", department: "", session: "", roll: "", reason: "" };
+const BLANK = { name: "", email: "", phone: "", department: "", session: "", roll: "", bloodGroup: "", reason: "" };
 
 /** Public membership application. Posts to /api/requests, landing in the admin panel. */
 export default function JoinForm() {
@@ -135,6 +135,19 @@ export default function JoinForm() {
           placeholder="name@example.com"
           disabled={busy}
           autoComplete="email"
+        />
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Select
+          label="রক্তের গ্রুপ"
+          options={BLOOD_GROUPS}
+          value={values.bloodGroup}
+          onChange={set("bloodGroup")}
+          error={errors.bloodGroup}
+          placeholder="রক্তের গ্রুপ নির্বাচন করুন"
+          help="ঐচ্ছিক — রক্তদান কার্যক্রমে গ্রুপের কাজে লাগে।"
+          disabled={busy}
         />
       </div>
 

@@ -15,7 +15,29 @@
       "Bash(curl -s -o /dev/null -w \"  /no-such-page -> %{http_code}\\\\n\" http://localhost:3000/no-such-page)",
       "Bash(curl -s -m 20 http://localhost:3000/)",
       "Bash(git init *)",
-      "Bash(git config *)"
+      "Bash(git config *)",
+      "Bash(echo \"=== does .env.local use CRLF? \\(matters — a stray \\\\\\\\r breaks the URI\\) ===\")",
+      "Bash(git check-ignore *)",
+      "Bash(echo \"typecheck exit: $?\")",
+      "Bash(echo \"exit=$?\")",
+      "Bash(curl -s -b /tmp/jar.txt -X POST http://localhost:3000/api/admin/exmembers -H 'Content-Type: application/json' --data-raw '{\"title\":\"পরীক্ষামূলক প্রাক্তন রোভার\",\"description\":\"যাচাইয়ের জন্য তৈরি করা সাময়িক রেকর্ড।\",\"status\":\"published\",\"meta\":{\"role\":\"সিনিয়র রোভার মেট\",\"department\":\"ইলেকট্রিক্যাল\",\"session\":\"২০১৮-১৯\",\"passingYear\":\"২০২১\",\"bloodGroup\":\"B+\",\"occupation\":\"টেকনিশিয়ান, বরগুনা\",\"phone\":\"০১৭১১২২৩৩৪৪\",\"email\":\"ex@example.com\"}}' -w '\\\\nHTTP %{http_code}\\\\n')",
+      "Bash(curl -s -b /tmp/jar.txt -X POST http://localhost:3000/api/admin/exmembers -H 'Content-Type: application/json' --data-raw '{\"title\":\"খসড়া প্রাক্তন রোভার\",\"description\":\"\",\"status\":\"draft\",\"meta\":{\"passingYear\":\"২০১৯\",\"bloodGroup\":\"O-\"}}' -o /dev/null -w 'HTTP %{http_code}\\\\n')",
+      "Bash(curl -s http://localhost:3000/api/exmembers)",
+      "Bash(curl -s -b /tmp/jar.txt http://localhost:3000/api/admin/exmembers)",
+      "Bash(node -e ' *)",
+      "Bash(curl -s -X POST http://localhost:3000/api/requests -H \"Content-Type: application/json; charset=utf-8\" --data-binary \"@tmp-join.json\" -w \" HTTP %{http_code}\\\\n\")",
+      "Bash(curl -s -X POST http://localhost:3000/api/requests -H 'Content-Type: application/json; charset=utf-8' --data-raw '{\"name\":\"Test User\",\"email\":\"t@example.com\",\"phone\":\"01711111111\",\"department\":\"Civil\",\"session\":\"2024-25\",\"roll\":\"111\",\"bloodGroup\":\"XYZ\",\"reason\":\"\"}' -w ' HTTP %{http_code}\\\\n')",
+      "Bash(curl -s -b /tmp/jar.txt http://localhost:3000/api/admin/requests)",
+      "Bash(node -e \"const ex=require\\('./tmp-adm.json'\\);console.log\\(JSON.stringify\\(Object.keys\\(ex\\)\\)\\);console.log\\(JSON.stringify\\(ex\\).slice\\(0,400\\)\\)\")",
+      "Bash(curl -s -b tmp-cookie.txt 'http://localhost:3000/api/admin/exmembers' -o tmp-v1.json -w 'admin exmembers -> %{http_code} ')",
+      "Bash(node -e \"console.log\\('count='+require\\('./tmp-v1.json'\\).length\\)\")",
+      "Bash(curl -s -b tmp-cookie.txt 'http://localhost:3000/api/admin/requests' -o tmp-v2.json -w 'admin requests -> %{http_code} ')",
+      "Bash(node -e \"console.log\\('count='+require\\('./tmp-v2.json'\\).length\\)\")",
+      "Bash(curl -s 'http://localhost:3000/api/exmembers' -o tmp-v3.json -w 'public exmembers -> %{http_code}\\\\n')",
+      "Bash(curl -s -b tmp-cookie.txt 'http://localhost:3000/api/admin/members' -o tmp-mem.json -w 'members -> %{http_code}\\\\n')",
+      "Bash(curl -s -b tmp-cookie.txt -X PUT 'http://localhost:3000/api/admin/members/6a8f4d2a8a40b1361c573859' -H 'Content-Type: application/json' --data-binary @tmp-clear.json -o tmp-clear-res.json -w 'clear -> %{http_code}\\\\n')",
+      "Bash(curl -s -b tmp-cookie.txt 'http://localhost:3000/api/admin/members' -o tmp-mem2.json)",
+      "Bash(rm -f tmp-*.json tmp-cookie.txt && ls tmp-* 2>/dev/null; echo \"--- git status ---\"; git status --porcelain)"
     ]
   }
 }

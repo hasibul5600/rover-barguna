@@ -9,6 +9,7 @@ type Item = { href: string; icon: string; label: string };
 const MANAGE: Item[] = [
   { href: "/admin", icon: "▦", label: "ড্যাশবোর্ড" },
   { href: "/admin/members", icon: "♙", label: "সদস্য" },
+  { href: "/admin/exmembers", icon: "⚐", label: "প্রাক্তন সদস্য" },
   { href: "/admin/requests", icon: "◌", label: "আবেদনসমূহ" },
   { href: "/admin/events", icon: "◷", label: "ইভেন্ট" },
   { href: "/admin/activities", icon: "✦", label: "কার্যক্রম" },

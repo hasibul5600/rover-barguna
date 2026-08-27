@@ -1,1 +1,6 @@
-import ManagementPage from "@/components/admin/ManagementPage"; export default function Page(){return <ManagementPage collection="requests" title="সদস্য আবেদন" description="নতুন সদস্যপদের আবেদন পর্যালোচনা করুন।" action="আবেদন যোগ করুন"/>}
+import PeopleManager from "@/components/admin/PeopleManager";
+import { REQUEST_PEOPLE } from "@/lib/people";
+
+export default function RequestsPage() {
+  return <PeopleManager config={REQUEST_PEOPLE} />;
+}

@@ -70,6 +70,7 @@ export default async function AdminSettingsPage() {
   const contentRows = stats
     ? ([
         ["সদস্য", stats.members, "/admin/members"],
+        ["প্রাক্তন সদস্য", stats.exmembers, "/admin/exmembers"],
         ["আবেদন", stats.requests, "/admin/requests"],
         ["ইভেন্ট", stats.events, "/admin/events"],
         ["কার্যক্রম", stats.activities, "/admin/activities"],

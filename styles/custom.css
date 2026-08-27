@@ -33,6 +33,10 @@
 .hero-glow {
   position: relative;
   isolation: isolate;
+  /* The ::before glow is 130% of this box, so it spills ~15% past each edge and
+     used to give phones a 35px sideways scroll. `clip` trims it without turning
+     this into a scroll container (which `hidden` would). */
+  overflow-x: clip;
 }
 
 .hero-glow::before {

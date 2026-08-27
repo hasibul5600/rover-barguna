@@ -61,217 +61,225 @@ p {
 }
 
 /* ---------------------------------------------------------------------------
-   Layout
+   Everything below sits in Tailwind's "components" layer on purpose. Unlayered,
+   these rules land after the utilities in source order and silently win every
+   tie: "btn-primary hidden sm:inline-flex" stayed visible on phones because
+   .btn-primary sets display. Layered, a utility written in JSX always wins.
 --------------------------------------------------------------------------- */
-.container-x {
-  width: min(100% - 2rem, 75rem);
-  margin: auto;
-}
+@layer components {
+  /* ---------------------------------------------------------------------------
+     Layout
+  --------------------------------------------------------------------------- */
+  .container-x {
+    width: min(100% - 2rem, 75rem);
+    margin: auto;
+  }
 
-/* ---------------------------------------------------------------------------
-   Buttons
---------------------------------------------------------------------------- */
-.btn-primary,
-.btn-light,
-.btn-outline,
-.btn-ghost {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  border-radius: 999px;
-  padding: 0.8rem 1.3rem;
-  font-weight: 700;
-  text-decoration: none;
-  cursor: pointer;
-  transition: transform 0.2s var(--ease-out-soft), box-shadow 0.2s var(--ease-out-soft),
-    background-color 0.2s, color 0.2s, border-color 0.2s;
-}
+  /* ---------------------------------------------------------------------------
+     Buttons
+  --------------------------------------------------------------------------- */
+  .btn-primary,
+  .btn-light,
+  .btn-outline,
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    padding: 0.8rem 1.3rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.2s var(--ease-out-soft), box-shadow 0.2s var(--ease-out-soft),
+      background-color 0.2s, color 0.2s, border-color 0.2s;
+  }
 
-.btn-primary {
-  background: var(--gold);
-  color: #203129;
-  border: 0;
-  box-shadow: 0 8px 20px #0002;
-}
+  .btn-primary {
+    background: var(--gold);
+    color: #203129;
+    border: 0;
+    box-shadow: 0 8px 20px #0002;
+  }
 
-.btn-light {
-  border: 1px solid #fff9;
-  color: #fff;
-  background: transparent;
-}
+  .btn-light {
+    border: 1px solid #fff9;
+    color: #fff;
+    background: transparent;
+  }
 
-.btn-outline {
-  border: 1.5px solid color-mix(in oklab, var(--leaf) 40%, transparent);
-  color: var(--forest);
-  background: #fff;
-}
+  .btn-outline {
+    border: 1.5px solid color-mix(in oklab, var(--leaf) 40%, transparent);
+    color: var(--forest);
+    background: #fff;
+  }
 
-.btn-ghost {
-  border: 0;
-  background: transparent;
-  color: var(--forest);
-  box-shadow: none;
-}
+  .btn-ghost {
+    border: 0;
+    background: transparent;
+    color: var(--forest);
+    box-shadow: none;
+  }
 
-.btn-primary:hover,
-.btn-light:hover,
-.btn-outline:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 26px #0003;
-}
+  .btn-primary:hover,
+  .btn-light:hover,
+  .btn-outline:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px #0003;
+  }
 
-.btn-light:hover {
-  background: #fff2;
-}
+  .btn-light:hover {
+    background: #fff2;
+  }
 
-.btn-outline:hover {
-  border-color: var(--leaf);
-  background: var(--color-mist);
-}
+  .btn-outline:hover {
+    border-color: var(--leaf);
+    background: var(--color-mist);
+  }
 
-.btn-ghost:hover {
-  background: rgb(7 59 44 / 0.06);
-}
+  .btn-ghost:hover {
+    background: rgb(7 59 44 / 0.06);
+  }
 
-.btn-primary:active,
-.btn-light:active,
-.btn-outline:active {
-  transform: translateY(0);
-  box-shadow: 0 4px 12px #0002;
-}
+  .btn-primary:active,
+  .btn-light:active,
+  .btn-outline:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px #0002;
+  }
 
-.btn-primary:disabled,
-.btn-outline:disabled,
-.btn-ghost:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
+  .btn-primary:disabled,
+  .btn-outline:disabled,
+  .btn-ghost:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
 
-/* ---------------------------------------------------------------------------
-   Section headings
---------------------------------------------------------------------------- */
-.section-kicker {
-  color: var(--leaf);
-  font-size: 0.8rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
+  /* ---------------------------------------------------------------------------
+     Section headings
+  --------------------------------------------------------------------------- */
+  .section-kicker {
+    color: var(--leaf);
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
 
-.section-title {
-  margin-top: 0.35rem;
-  color: var(--forest);
-  font-size: clamp(1.75rem, 4vw, 2.6rem);
-  font-weight: 800;
-  line-height: 1.2;
-}
+  .section-title {
+    margin-top: 0.35rem;
+    color: var(--forest);
+    font-size: clamp(1.75rem, 4vw, 2.6rem);
+    font-weight: 800;
+    line-height: 1.2;
+  }
 
-.section-lead {
-  margin-top: 1rem;
-  max-width: 44rem;
-  color: #4a5c55;
-}
+  .section-lead {
+    margin-top: 1rem;
+    max-width: 44rem;
+    color: #4a5c55;
+  }
 
-/* ---------------------------------------------------------------------------
-   Surfaces
---------------------------------------------------------------------------- */
-.surface {
-  border-radius: 1rem;
-  border: 1px solid rgb(6 55 42 / 0.08);
-  background: #fff;
-  box-shadow: var(--shadow-card);
-}
+  /* ---------------------------------------------------------------------------
+     Surfaces
+  --------------------------------------------------------------------------- */
+  .surface {
+    border-radius: 1rem;
+    border: 1px solid rgb(6 55 42 / 0.08);
+    background: #fff;
+    box-shadow: var(--shadow-card);
+  }
 
-.surface-hover {
-  transition: transform 0.25s var(--ease-out-soft), box-shadow 0.25s var(--ease-out-soft),
-    border-color 0.25s;
-}
+  .surface-hover {
+    transition: transform 0.25s var(--ease-out-soft), box-shadow 0.25s var(--ease-out-soft),
+      border-color 0.25s;
+  }
 
-.surface-hover:hover {
-  transform: translateY(-4px);
-  border-color: rgb(23 112 84 / 0.28);
-  box-shadow: var(--shadow-lift);
-}
+  .surface-hover:hover {
+    transform: translateY(-4px);
+    border-color: rgb(23 112 84 / 0.28);
+    box-shadow: var(--shadow-lift);
+  }
 
-/* Decorative dotted paper used behind dark hero sections. */
-.dot-grid {
-  background-image: radial-gradient(rgb(255 255 255 / 0.14) 1px, transparent 1px);
-  background-size: 22px 22px;
-}
+  /* Decorative dotted paper used behind dark hero sections. */
+  .dot-grid {
+    background-image: radial-gradient(rgb(255 255 255 / 0.14) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
 
-/* ---------------------------------------------------------------------------
-   Form controls
---------------------------------------------------------------------------- */
-.field {
-  width: 100%;
-  border-radius: 0.75rem;
-  border: 1px solid #e2e8e5;
-  background: #fff;
-  padding: 0.65rem 0.85rem;
-  font: inherit;
-  color: var(--ink);
-  transition: border-color 0.18s, box-shadow 0.18s;
-}
+  /* ---------------------------------------------------------------------------
+     Form controls
+  --------------------------------------------------------------------------- */
+  .field {
+    width: 100%;
+    border-radius: 0.75rem;
+    border: 1px solid #e2e8e5;
+    background: #fff;
+    padding: 0.65rem 0.85rem;
+    font: inherit;
+    color: var(--ink);
+    transition: border-color 0.18s, box-shadow 0.18s;
+  }
 
-.field::placeholder {
-  color: #9aa8a2;
-}
+  .field::placeholder {
+    color: #9aa8a2;
+  }
 
-.field:hover {
-  border-color: #cbd8d2;
-}
+  .field:hover {
+    border-color: #cbd8d2;
+  }
 
-.field:focus {
-  outline: none;
-  border-color: var(--leaf);
-  box-shadow: 0 0 0 3px rgb(23 112 84 / 0.14);
-}
+  .field:focus {
+    outline: none;
+    border-color: var(--leaf);
+    box-shadow: 0 0 0 3px rgb(23 112 84 / 0.14);
+  }
 
-.field:disabled {
-  background: #f4f6f5;
-  cursor: not-allowed;
-}
+  .field:disabled {
+    background: #f4f6f5;
+    cursor: not-allowed;
+  }
 
-.field-invalid,
-.field[aria-invalid="true"] {
-  border-color: #dc2626;
-}
+  .field-invalid,
+  .field[aria-invalid="true"] {
+    border-color: #dc2626;
+  }
 
-.field-invalid:focus,
-.field[aria-invalid="true"]:focus {
-  box-shadow: 0 0 0 3px rgb(220 38 38 / 0.14);
-}
+  .field-invalid:focus,
+  .field[aria-invalid="true"]:focus {
+    box-shadow: 0 0 0 3px rgb(220 38 38 / 0.14);
+  }
 
-.field-label {
-  display: grid;
-  gap: 0.375rem;
-  font-size: 0.875rem;
-  font-weight: 700;
-  color: #33453e;
-}
+  .field-label {
+    display: grid;
+    gap: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #33453e;
+  }
 
-/* ---------------------------------------------------------------------------
-   Badges
---------------------------------------------------------------------------- */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  border-radius: 999px;
-  padding: 0.2rem 0.6rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  white-space: nowrap;
-}
+  /* ---------------------------------------------------------------------------
+     Badges
+  --------------------------------------------------------------------------- */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
 
-.badge-green { background: #ecfdf5; color: #047857; }
-.badge-amber { background: #fffbeb; color: #b45309; }
-.badge-red   { background: #fef2f2; color: #b91c1c; }
-.badge-slate { background: #f1f5f9; color: #475569; }
-.badge-gold  { background: rgb(245 191 67 / 0.18); color: #8a6206; }
+  .badge-green { background: #ecfdf5; color: #047857; }
+  .badge-amber { background: #fffbeb; color: #b45309; }
+  .badge-red   { background: #fef2f2; color: #b91c1c; }
+  .badge-slate { background: #f1f5f9; color: #475569; }
+  .badge-gold  { background: rgb(245 191 67 / 0.18); color: #8a6206; }
+}
 
 /* ---------------------------------------------------------------------------
    Focus visibility — one consistent ring everywhere.

@@ -1,4 +1,4 @@
-import { DEPARTMENTS, type FieldSpec } from "@/lib/validators";
+import { BLOOD_GROUPS, DEPARTMENTS, type FieldSpec } from "@/lib/validators";
 
 /**
  * Members are stored as ContentItem documents with collection:"members" —
@@ -9,6 +9,7 @@ export type MemberMeta = {
   department?: string;
   session?: string;
   roll?: string;
+  bloodGroup?: string;
   phone?: string;
   email?: string;
   role?: string;
@@ -35,6 +36,7 @@ export const MEMBER_FIELDS: FieldSpec[] = [
   { name: "department", label: "বিভাগ", type: "select", options: DEPARTMENTS, inTable: true },
   { name: "session", label: "সেশন", type: "text", placeholder: "২০২৩-২৪" },
   { name: "roll", label: "রোল নম্বর", type: "text", placeholder: "১২৩৪৫৬" },
+  { name: "bloodGroup", label: "রক্তের গ্রুপ", type: "select", options: BLOOD_GROUPS, inTable: true },
   { name: "phone", label: "মোবাইল", type: "tel", placeholder: "০১৭xxxxxxxx", inTable: true },
   { name: "email", label: "ইমেইল", type: "email", placeholder: "name@example.com" },
   { name: "description", label: "সংক্ষিপ্ত পরিচিতি", type: "textarea" },

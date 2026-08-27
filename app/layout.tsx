@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import SiteShell from "@/components/layout/SiteShell";
 import { absoluteUrl, BRAND_COLOR, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
@@ -68,6 +69,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="bn" dir="ltr" suppressHydrationWarning data-scroll-behavior="smooth">
       <body>
         <SiteShell>{children}</SiteShell>
+        {/* Vercel Web Analytics — a no-op outside Vercel, so local dev is unaffected.
+            Cookieless page-view counting only; no personal data is collected. */}
+        <Analytics />
       </body>
     </html>
   );
