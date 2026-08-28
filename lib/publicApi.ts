@@ -38,7 +38,7 @@ function publicStatuses(collection: string) {
 export async function listPublic(collection: string, limit = 100) {
   await connectDb();
   const items = await ContentItem.find({ collection, status: { $in: publicStatuses(collection) } })
-    .sort({ createdAt: -1 })
+    .sort({ "meta.sortOrder": 1, createdAt: -1 })
     .limit(limit)
     .lean();
   return items.map(shape);
@@ -50,7 +50,10 @@ export async function listPublic(collection: string, limit = 100) {
  */
 export async function listAll(collection: string, limit = 200) {
   await connectDb();
-  const items = await ContentItem.find({ collection }).sort({ createdAt: -1 }).limit(limit).lean();
+  const items = await ContentItem.find({ collection })
+    .sort({ "meta.sortOrder": 1, createdAt: -1 })
+    .limit(limit)
+    .lean();
   return items.map(shape);
 }
 

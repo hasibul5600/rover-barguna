@@ -15,12 +15,12 @@ export type EventMeta = {
 };
 
 export const EVENT_FIELDS: FieldSpec[] = [
-  { name: "title", label: "ইভেন্টের নাম", type: "text", required: true, placeholder: "যেমন: বার্ষিক তাঁবু জলসা", inTable: true },
+  { name: "title", label: "ইভেন্টের নাম", type: "text", required: true, placeholder: "", inTable: true },
   { name: "date", label: "তারিখ", type: "date", required: true, inTable: true },
-  { name: "time", label: "সময়", type: "text", placeholder: "সকাল ৯:০০" },
-  { name: "venue", label: "স্থান", type: "text", placeholder: "কলেজ মাঠ, বরগুনা", inTable: true },
-  { name: "organiser", label: "আয়োজক", type: "text", placeholder: "রোভার স্কাউট গ্রুপ" },
-  { name: "seats", label: "আসন সংখ্যা", type: "number", placeholder: "৫০" },
+  { name: "time", label: "সময়", type: "text", placeholder: "" },
+  { name: "venue", label: "স্থান", type: "text", placeholder: "", inTable: true },
+  { name: "organiser", label: "আয়োজক", type: "text", placeholder: "" },
+  { name: "seats", label: "আসন সংখ্যা", type: "number", placeholder: "" },
   { name: "description", label: "বিস্তারিত", type: "textarea" },
 ];
 

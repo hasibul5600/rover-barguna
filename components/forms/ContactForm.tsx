@@ -60,7 +60,7 @@ export default function ContactForm() {
           value={values.name}
           onChange={set("name")}
           error={errors.name}
-          placeholder="পূর্ণ নাম"
+          placeholder=""
           disabled={busy}
           autoComplete="name"
         />
@@ -71,7 +71,7 @@ export default function ContactForm() {
           value={values.email}
           onChange={set("email")}
           error={errors.email}
-          placeholder="name@example.com"
+          placeholder=""
           disabled={busy}
           autoComplete="email"
         />
@@ -84,7 +84,7 @@ export default function ContactForm() {
           value={values.phone}
           onChange={set("phone")}
           error={errors.phone}
-          placeholder="০১৭xxxxxxxx"
+          placeholder=""
           help="ঐচ্ছিক"
           disabled={busy}
           autoComplete="tel"
@@ -95,7 +95,7 @@ export default function ContactForm() {
           value={values.subject}
           onChange={set("subject")}
           error={errors.subject}
-          placeholder="কী নিয়ে লিখছেন?"
+          placeholder=""
           disabled={busy}
         />
       </div>
@@ -107,7 +107,7 @@ export default function ContactForm() {
         value={values.message}
         onChange={set("message")}
         error={errors.message}
-        placeholder="বিস্তারিত লিখুন…"
+        placeholder=""
         help={`${values.message.length}/২০০০`}
         disabled={busy}
       />

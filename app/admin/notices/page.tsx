@@ -1,1 +1,5 @@
-import ManagementPage from "@/components/admin/ManagementPage"; export default function Page(){return <ManagementPage collection="notices" title="নোটিশ ব্যবস্থাপনা" description="সদস্য ও দর্শনার্থীদের জন্য নোটিশ প্রকাশ করুন।" action="নতুন নোটিশ"/>}
+import NoticeManager from "@/components/admin/NoticeManager";
+
+export default function Page() {
+  return <NoticeManager />;
+}

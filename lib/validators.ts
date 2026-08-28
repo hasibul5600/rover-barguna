@@ -100,11 +100,9 @@ export const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 export const DEPARTMENTS = [
   "কম্পিউটার",
   "সিভিল",
-  "ইলেকট্রিক্যাল",
-  "মেকানিক্যাল",
   "ইলেকট্রনিক্স",
-  "পাওয়ার",
-  "অন্যান্য",
+  "এনভায়রনমেন্টাল",
+  "রেফ্রিজারেশন এন্ড এয়ার কন্ডিশন",
 ];
 
 export function validateJoin(body: unknown): Validated<JoinInput> {

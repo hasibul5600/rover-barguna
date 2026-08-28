@@ -85,8 +85,21 @@ export default async function NoticesPage() {
 
                 <h2 className="mt-3 text-lg font-bold text-[color:var(--forest)]">{notice.title}</h2>
 
+                {notice.meta.image ? (
+                  <div className="mt-4 overflow-hidden rounded-xl border border-slate-100 bg-slate-50">
+                    <a href={notice.meta.image} target="_blank" rel="noopener noreferrer" title="পূর্ণ ছবি দেখুন">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={notice.meta.image}
+                        alt={notice.title}
+                        className="max-h-96 w-full object-cover transition hover:opacity-95"
+                      />
+                    </a>
+                  </div>
+                ) : null}
+
                 {notice.description ? (
-                  <p className="prose-bn mt-2 whitespace-pre-line text-slate-600">{notice.description}</p>
+                  <p className="prose-bn mt-3 whitespace-pre-line text-slate-600">{notice.description}</p>
                 ) : null}
 
                 {notice.meta.attachment ? (

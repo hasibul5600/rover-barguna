@@ -77,7 +77,7 @@ export default function JoinForm() {
           value={values.name}
           onChange={set("name")}
           error={errors.name}
-          placeholder="যেমন: মোঃ রিফাত হোসেন"
+          placeholder=""
           disabled={busy}
           autoComplete="name"
         />
@@ -99,7 +99,7 @@ export default function JoinForm() {
           value={values.session}
           onChange={set("session")}
           error={errors.session}
-          placeholder="২০২৩-২৪"
+          placeholder=""
           disabled={busy}
         />
         <Input
@@ -108,7 +108,7 @@ export default function JoinForm() {
           value={values.roll}
           onChange={set("roll")}
           error={errors.roll}
-          placeholder="১২৩৪৫৬"
+          placeholder=""
           disabled={busy}
         />
       </div>
@@ -121,7 +121,7 @@ export default function JoinForm() {
           value={values.phone}
           onChange={set("phone")}
           error={errors.phone}
-          placeholder="০১৭xxxxxxxx"
+          placeholder=""
           disabled={busy}
           autoComplete="tel"
         />
@@ -132,7 +132,7 @@ export default function JoinForm() {
           value={values.email}
           onChange={set("email")}
           error={errors.email}
-          placeholder="name@example.com"
+          placeholder=""
           disabled={busy}
           autoComplete="email"
         />
@@ -157,7 +157,7 @@ export default function JoinForm() {
         value={values.reason}
         onChange={set("reason")}
         error={errors.reason}
-        placeholder="স্কাউটিংয়ে আপনার আগ্রহ ও প্রত্যাশা সম্পর্কে লিখুন…"
+        placeholder=""
         help="ঐচ্ছিক, তবে আপনার আবেদন আরও জোরালো করে।"
         disabled={busy}
       />

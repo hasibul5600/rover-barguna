@@ -35,47 +35,51 @@ async function getMembers(): Promise<Member[]> {
 }
 
 function MemberCard({ member }: { member: Member }) {
-  const { role, department, session, bloodGroup, image, email, phone } = member.meta;
+  const { role, department, session, bsId, bloodGroup, image, email, phone } = member.meta;
+
+  const subtitle = [department, session, bsId ? `বি.এস: ${bsId}` : null].filter(Boolean).join(" · ") || "রোভার স্কাউট গ্রুপ";
 
   return (
-    <article className="surface surface-hover overflow-hidden">
-      <div className="grid aspect-[4/3] place-items-center bg-gradient-to-br from-[#e7f2eb] to-[#d6e8dd]">
-        {image ? (
-          // Cloudinary URLs are remote and unconfigured for next/image, so plain <img>.
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={image} alt={member.title} className="size-full object-cover" />
-        ) : (
-          <span className="grid size-20 place-items-center rounded-full bg-[color:var(--forest)] text-3xl font-bold text-[#f5bf43]">
-            {initial(member.title)}
-          </span>
-        )}
-      </div>
-
-      <div className="p-5">
-        {role ? <p className="text-xs font-bold tracking-wider text-[color:var(--leaf)] uppercase">{role}</p> : null}
-        <h3 className="mt-1 font-bold text-[color:var(--forest)]">{member.title}</h3>
-
-        <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
-          <p className="text-sm text-slate-500">
-            {[department, session].filter(Boolean).join(" · ") || "রোভার স্কাউট গ্রুপ"}
-          </p>
-          {/* Latin letters on purpose — blood groups are written "A+"/"O-" everywhere in
-              Bangladesh, and the group needs them readable during a blood drive. */}
-          {bloodGroup ? (
-            <span className="rounded-full bg-red-50 px-2 py-0.5 text-xs font-bold text-red-700">
-              <span aria-hidden>🩸 </span>
-              <span className="sr-only">রক্তের গ্রুপ: </span>
-              {bloodGroup}
+    <article className="surface surface-hover flex h-full flex-col justify-between overflow-hidden">
+      <div>
+        <div className="grid aspect-[4/3] place-items-center bg-gradient-to-br from-[#e7f2eb] to-[#d6e8dd]">
+          {image ? (
+            // Cloudinary URLs are remote and unconfigured for next/image, so plain <img>.
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={image} alt={member.title} className="size-full object-cover" />
+          ) : (
+            <span className="grid size-20 place-items-center rounded-full bg-[color:var(--forest)] text-3xl font-bold text-[#f5bf43]">
+              {initial(member.title)}
             </span>
-          ) : null}
+          )}
         </div>
 
-        {member.description ? (
-          <p className="mt-3 text-sm leading-6 text-slate-600">{member.description}</p>
-        ) : null}
+        <div className="p-5">
+          {role ? <p className="text-xs font-bold tracking-wider text-[color:var(--leaf)] uppercase">{role}</p> : null}
+          <h3 className="mt-1 font-bold text-[color:var(--forest)]">{member.title}</h3>
 
-        {email || phone ? (
-          <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 border-t border-slate-100 pt-3 text-xs font-semibold text-slate-500">
+          <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
+            <p className="text-sm text-slate-500">{subtitle}</p>
+            {/* Latin letters on purpose — blood groups are written "A+"/"O-" everywhere in
+                Bangladesh, and the group needs them readable during a blood drive. */}
+            {bloodGroup ? (
+              <span className="rounded-full bg-red-50 px-2 py-0.5 text-xs font-bold text-red-700">
+                <span aria-hidden>🩸 </span>
+                <span className="sr-only">রক্তের গ্রুপ: </span>
+                {bloodGroup}
+              </span>
+            ) : null}
+          </div>
+
+          {member.description ? (
+            <p className="mt-3 text-sm leading-6 text-slate-600 line-clamp-3">{member.description}</p>
+          ) : null}
+        </div>
+      </div>
+
+      {email || phone ? (
+        <div className="px-5 pb-5">
+          <div className="flex flex-wrap gap-x-4 gap-y-1 border-t border-slate-100 pt-3 text-xs font-semibold text-slate-500">
             {email ? (
               <a href={`mailto:${email}`} className="hover:text-[color:var(--leaf)]">
                 ✉ {email}
@@ -87,8 +91,8 @@ function MemberCard({ member }: { member: Member }) {
               </a>
             ) : null}
           </div>
-        ) : null}
-      </div>
+        </div>
+      ) : null}
     </article>
   );
 }

@@ -35,6 +35,8 @@ const ROLE_TONE: Record<string, string> = {
   "সিনিয়র রোভার মেট": "bg-[#fdf0d5] text-[#92400e]",
   "রোভার মেট": "bg-[#e7f2eb] text-[color:var(--forest)]",
   "সহকারী রোভার মেট": "bg-[#e0f2fe] text-[#075985]",
+  "সদস্য": "bg-[#e0f7f4] text-[#115e59]",
+  "সহচর": "bg-[#fce7f3] text-[#9d174d]",
 };
 
 /** Used unless the config supplies its own review states. */
@@ -47,6 +49,35 @@ const DEFAULT_STATUS_TONES: Record<string, string> = {
   published: "bg-emerald-50 text-emerald-700",
   draft: "bg-slate-100 text-slate-600",
 };
+
+/** Sort people list by role position defined in config options, then by sortOrder. */
+function sortPeople(config: PeopleConfig, list: Person[]): Person[] {
+  const roleField = config.fields.find((f) => f.key === "role");
+  const roleOptions = roleField?.options;
+
+  if (!roleOptions || roleOptions.length === 0) {
+    return list;
+  }
+
+  return [...list].sort((a, b) => {
+    const roleA = a.meta?.role || "";
+    const roleB = b.meta?.role || "";
+
+    const idxA = roleOptions.indexOf(roleA);
+    const idxB = roleOptions.indexOf(roleB);
+
+    const orderA = idxA === -1 ? 999 : idxA;
+    const orderB = idxB === -1 ? 999 : idxB;
+
+    if (orderA !== orderB) {
+      return orderA - orderB;
+    }
+
+    const sortOrderA = Number(a.meta?.sortOrder) || 0;
+    const sortOrderB = Number(b.meta?.sortOrder) || 0;
+    return sortOrderA - sortOrderB;
+  });
+}
 
 /** name/bio/status are fixed; the rest of the keys come from the config. */
 function blankValues(config: PeopleConfig): Values {
@@ -154,7 +185,8 @@ export default function PeopleManager({ config }: { config: PeopleConfig }) {
     try {
       const response = await fetch(endpoint, { cache: "no-store" });
       if (!response.ok) throw new Error(String(response.status));
-      setPeople(await response.json());
+      const data = await response.json();
+      setPeople(sortPeople(config, data));
       setError("");
     } catch {
       setError(`${noun} তালিকা লোড করা যায়নি। ডাটাবেজ সংযোগ পরীক্ষা করুন।`);
@@ -282,6 +314,35 @@ export default function PeopleManager({ config }: { config: PeopleConfig }) {
     }
   };
 
+  const move = async (index: number, direction: -1 | 1) => {
+    const newIndex = index + direction;
+    if (newIndex < 0 || newIndex >= people.length) return;
+
+    const nextPeople = [...people];
+    const [moved] = nextPeople.splice(index, 1);
+    nextPeople.splice(newIndex, 0, moved);
+
+    setPeople(nextPeople);
+
+    const items = nextPeople.map((person, idx) => ({
+      id: person._id,
+      sortOrder: idx + 1,
+    }));
+
+    try {
+      const response = await fetch(`${endpoint}/reorder`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items }),
+      });
+      if (!response.ok) {
+        load();
+      }
+    } catch {
+      load();
+    }
+  };
+
   const statusPill = (person: Person) => (
     <span
       className={cn(
@@ -333,7 +394,7 @@ export default function PeopleManager({ config }: { config: PeopleConfig }) {
                 with the 256px sidebar alongside it a 1024px tablet had to scroll
                 287px sideways on every row — same problem as a phone, just less bad. */}
             <ul className="divide-y divide-slate-100 xl:hidden">
-              {people.map((person) => {
+              {people.map((person, index) => {
                 const subtitle = subtitleOf(config, person);
 
                 return (
@@ -344,7 +405,29 @@ export default function PeopleManager({ config }: { config: PeopleConfig }) {
                         <p className="font-bold break-words text-slate-700">{person.title}</p>
                         {subtitle ? <p className="text-xs text-slate-400">{subtitle}</p> : null}
                       </div>
-                      {statusPill(person)}
+                      <div className="flex flex-col items-end gap-1.5">
+                        {statusPill(person)}
+                        <div className="flex items-center gap-1">
+                          <button
+                            type="button"
+                            disabled={index === 0}
+                            onClick={() => move(index, -1)}
+                            className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs font-bold text-slate-600 hover:bg-slate-100 disabled:opacity-30"
+                            title="উপরে সরান"
+                          >
+                            ↑
+                          </button>
+                          <button
+                            type="button"
+                            disabled={index === people.length - 1}
+                            onClick={() => move(index, 1)}
+                            className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs font-bold text-slate-600 hover:bg-slate-100 disabled:opacity-30"
+                            title="নিচে সরান"
+                          >
+                            ↓
+                          </button>
+                        </div>
+                      </div>
                     </div>
 
                     {columns.length ? (
@@ -396,11 +479,12 @@ export default function PeopleManager({ config }: { config: PeopleConfig }) {
                       </th>
                     ))}
                     <th className="px-4 py-3">অবস্থা</th>
+                    <th className="px-4 py-3 text-center">ক্রম (Priority)</th>
                     <th className="px-4 py-3 text-right">কাজ</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {people.map((person) => {
+                  {people.map((person, index) => {
                     const subtitle = subtitleOf(config, person);
 
                     return (
@@ -422,6 +506,28 @@ export default function PeopleManager({ config }: { config: PeopleConfig }) {
                           </td>
                         ))}
                         <td className="px-4 py-3.5">{statusPill(person)}</td>
+                        <td className="px-4 py-3.5">
+                          <div className="flex items-center justify-center gap-1">
+                            <button
+                              type="button"
+                              disabled={index === 0}
+                              onClick={() => move(index, -1)}
+                              className="rounded border border-slate-200 bg-white px-2 py-1 text-xs font-bold text-slate-600 hover:bg-slate-100 disabled:opacity-30 transition"
+                              title="উপরে সরান"
+                            >
+                              ↑
+                            </button>
+                            <button
+                              type="button"
+                              disabled={index === people.length - 1}
+                              onClick={() => move(index, 1)}
+                              className="rounded border border-slate-200 bg-white px-2 py-1 text-xs font-bold text-slate-600 hover:bg-slate-100 disabled:opacity-30 transition"
+                              title="নিচে সরান"
+                            >
+                              ↓
+                            </button>
+                          </div>
+                        </td>
                         <td className="space-x-3 px-4 py-3.5 text-right whitespace-nowrap">
                           <button
                             type="button"

@@ -48,7 +48,9 @@ export async function GET(_: Request, { params }: { params: Promise<{ collection
 
   try {
     await connectDb();
-    return NextResponse.json(await ContentItem.find({ collection }).sort({ createdAt: -1 }).lean());
+    return NextResponse.json(
+      await ContentItem.find({ collection }).sort({ "meta.sortOrder": 1, createdAt: -1 }).lean()
+    );
   } catch (err) {
     console.error("DB ERROR:", err);
     return NextResponse.json({ message: "ডাটাবেজে সংযোগ করা যায়নি।" }, { status: 500 });
@@ -104,6 +106,15 @@ export async function POST(request: Request, { params }: { params: Promise<{ col
 
   try {
     await connectDb();
+    if (meta.sortOrder === undefined || meta.sortOrder === null || meta.sortOrder === "") {
+      const lastItem = await ContentItem.findOne({ collection })
+        .sort({ "meta.sortOrder": -1 })
+        .select("meta.sortOrder")
+        .lean();
+      const maxSortOrder = typeof lastItem?.meta?.sortOrder === "number" ? lastItem.meta.sortOrder : 0;
+      meta.sortOrder = maxSortOrder + 1;
+    }
+
     return NextResponse.json(
       await ContentItem.create({
         collection,

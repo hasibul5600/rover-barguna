@@ -9,6 +9,7 @@ export type MemberMeta = {
   department?: string;
   session?: string;
   roll?: string;
+  bsId?: string;
   bloodGroup?: string;
   phone?: string;
   email?: string;
@@ -26,19 +27,20 @@ export const MEMBER_ROLES = [
   "সিনিয়র রোভার মেট",
   "রোভার মেট",
   "সহকারী রোভার মেট",
-  "সিনিয়র রোভার",
-  "রোভার",
+  "সদস্য",
+  "সহচর",
 ];
 
 export const MEMBER_FIELDS: FieldSpec[] = [
-  { name: "title", label: "পূর্ণ নাম", type: "text", required: true, placeholder: "যেমন: মোঃ রিফাত হোসেন", inTable: true },
+  { name: "title", label: "পূর্ণ নাম", type: "text", required: true, placeholder: "", inTable: true },
   { name: "role", label: "পদবি", type: "select", options: MEMBER_ROLES, inTable: true },
   { name: "department", label: "বিভাগ", type: "select", options: DEPARTMENTS, inTable: true },
-  { name: "session", label: "সেশন", type: "text", placeholder: "২০২৩-২৪" },
-  { name: "roll", label: "রোল নম্বর", type: "text", placeholder: "১২৩৪৫৬" },
+  { name: "session", label: "সেশন", type: "text", placeholder: "" },
+  { name: "roll", label: "রোল নম্বর", type: "text", placeholder: "" },
+  { name: "bsId", label: "বি.এস আইডি", type: "text", placeholder: "", inTable: true },
   { name: "bloodGroup", label: "রক্তের গ্রুপ", type: "select", options: BLOOD_GROUPS, inTable: true },
-  { name: "phone", label: "মোবাইল", type: "tel", placeholder: "০১৭xxxxxxxx", inTable: true },
-  { name: "email", label: "ইমেইল", type: "email", placeholder: "name@example.com" },
+  { name: "phone", label: "মোবাইল", type: "tel", placeholder: "", inTable: true },
+  { name: "email", label: "ইমেইল", type: "email", placeholder: "" },
   { name: "description", label: "সংক্ষিপ্ত পরিচিতি", type: "textarea" },
 ];
 

@@ -110,7 +110,7 @@ export default function GalleryManager() {
           {preview && <img src={preview} alt="Preview" className="mt-4 aspect-video w-full rounded-xl object-cover" />}
           <label className="mt-4 grid gap-1.5 text-sm font-bold">
             ছবির শিরোনাম
-            <input required value={title} onChange={(e) => setTitle(e.target.value)} className="rounded-xl border border-slate-200 px-3 py-2.5" placeholder="যেমন: শীতকালীন ক্যাম্প ২০২৬" />
+            <input required value={title} onChange={(e) => setTitle(e.target.value)} className="rounded-xl border border-slate-200 px-3 py-2.5" placeholder="" />
           </label>
           <label className="mt-4 grid gap-1.5 text-sm font-bold">
             বিবরণ

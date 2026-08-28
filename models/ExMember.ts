@@ -17,6 +17,7 @@ export type ExMemberMeta = {
   session?: string;
   /** Year they left the group, e.g. "২০২২". */
   passingYear?: string;
+  bsId?: string;
   bloodGroup?: string;
   /** Where they are now — job, higher study or business. */
   occupation?: string;

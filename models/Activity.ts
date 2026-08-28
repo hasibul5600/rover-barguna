@@ -24,11 +24,11 @@ export const ACTIVITY_CATEGORIES = [
 ];
 
 export const ACTIVITY_FIELDS: FieldSpec[] = [
-  { name: "title", label: "কার্যক্রমের নাম", type: "text", required: true, placeholder: "যেমন: রক্তদান কর্মসূচি", inTable: true },
+  { name: "title", label: "কার্যক্রমের নাম", type: "text", required: true, placeholder: "", inTable: true },
   { name: "category", label: "ধরন", type: "select", options: ACTIVITY_CATEGORIES, inTable: true },
-  { name: "icon", label: "আইকন", type: "text", placeholder: "✦", help: "একটি ইমোজি বা চিহ্ন দিন।" },
-  { name: "frequency", label: "কত ঘন ঘন", type: "text", placeholder: "মাসে একবার", inTable: true },
-  { name: "participants", label: "অংশগ্রহণকারী", type: "number", placeholder: "৩০" },
+  { name: "icon", label: "আইকন", type: "text", placeholder: "", help: "একটি ইমোজি বা চিহ্ন দিন।" },
+  { name: "frequency", label: "কত ঘন ঘন", type: "text", placeholder: "", inTable: true },
+  { name: "participants", label: "অংশগ্রহণকারী", type: "number", placeholder: "" },
   { name: "description", label: "বিবরণ", type: "textarea" },
 ];
 
