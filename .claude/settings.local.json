@@ -37,7 +37,8 @@
       "Bash(curl -s -b tmp-cookie.txt 'http://localhost:3000/api/admin/members' -o tmp-mem.json -w 'members -> %{http_code}\\\\n')",
       "Bash(curl -s -b tmp-cookie.txt -X PUT 'http://localhost:3000/api/admin/members/6a8f4d2a8a40b1361c573859' -H 'Content-Type: application/json' --data-binary @tmp-clear.json -o tmp-clear-res.json -w 'clear -> %{http_code}\\\\n')",
       "Bash(curl -s -b tmp-cookie.txt 'http://localhost:3000/api/admin/members' -o tmp-mem2.json)",
-      "Bash(rm -f tmp-*.json tmp-cookie.txt && ls tmp-* 2>/dev/null; echo \"--- git status ---\"; git status --porcelain)"
+      "Bash(rm -f tmp-*.json tmp-cookie.txt && ls tmp-* 2>/dev/null; echo \"--- git status ---\"; git status --porcelain)",
+      "Bash(echo \"=== typecheck exit: $? ===\")"
     ]
   }
 }

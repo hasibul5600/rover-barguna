@@ -100,6 +100,29 @@ function Cell({ field, meta }: { field: PeopleField; meta: Person["meta"] }) {
   return <span className="text-slate-600">{value || "—"}</span>;
 }
 
+/** Photo-or-initial bubble. Shared by the phone card list and the table. */
+function Avatar({ person }: { person: Person }) {
+  return (
+    <span className="grid size-11 shrink-0 place-items-center overflow-hidden rounded-full bg-[#e7f2eb] text-base font-bold text-[color:var(--leaf)]">
+      {person.meta?.image ? (
+        /* Cloudinary-hosted; next/image isn't configured for that domain. */
+        /* eslint-disable-next-line @next/next/no-img-element */
+        <img src={person.meta.image} alt={person.title} className="size-full object-cover" />
+      ) : (
+        (person.title || "?").trim().charAt(0)
+      )}
+    </span>
+  );
+}
+
+/** The small grey line under a name, e.g. "২০২৪-২৫ · ২৩১১০৫". */
+function subtitleOf(config: PeopleConfig, person: Person) {
+  return config.subtitleKeys
+    .map((key) => person.meta?.[key])
+    .filter(Boolean)
+    .join(" · ");
+}
+
 export default function PeopleManager({ config }: { config: PeopleConfig }) {
   const { noun } = config;
   const nameLabel = config.nameLabel || "পূর্ণ নাম";
@@ -259,6 +282,17 @@ export default function PeopleManager({ config }: { config: PeopleConfig }) {
     }
   };
 
+  const statusPill = (person: Person) => (
+    <span
+      className={cn(
+        "rounded-full px-2.5 py-1 text-xs font-bold whitespace-nowrap",
+        statusTones[person.status] || "bg-slate-100 text-slate-600"
+      )}
+    >
+      {statusLabel(person.status)}
+    </span>
+  );
+
   return (
     <>
       <div className="flex flex-wrap items-end justify-between gap-4">
@@ -294,89 +328,123 @@ export default function PeopleManager({ config }: { config: PeopleConfig }) {
         {loading ? (
           <p className="p-12 text-center text-slate-500">তথ্য লোড হচ্ছে…</p>
         ) : people.length ? (
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-200 text-left text-sm">
-              <thead className="bg-[#f8faf8] text-xs font-semibold text-slate-500">
-                <tr>
-                  <th className="px-5 py-3">{noun}</th>
-                  {columns.map((field) => (
-                    <th key={field.key} className="px-5 py-3">
-                      {field.tableLabel || field.label}
-                    </th>
-                  ))}
-                  <th className="px-5 py-3">অবস্থা</th>
-                  <th className="px-5 py-3 text-right">কাজ</th>
-                </tr>
-              </thead>
-              <tbody>
-                {people.map((person) => {
-                  const subtitle = config.subtitleKeys
-                    .map((key) => person.meta?.[key])
-                    .filter(Boolean)
-                    .join(" · ");
+          <>
+            {/* Cards below xl. The table needs ~975px for its Bengali columns, so
+                with the 256px sidebar alongside it a 1024px tablet had to scroll
+                287px sideways on every row — same problem as a phone, just less bad. */}
+            <ul className="divide-y divide-slate-100 xl:hidden">
+              {people.map((person) => {
+                const subtitle = subtitleOf(config, person);
 
-                  return (
-                    <tr key={person._id} className="border-t border-slate-100 align-middle">
-                      <td className="px-5 py-3.5">
-                        <div className="flex items-center gap-3">
-                          <span className="grid size-11 shrink-0 place-items-center overflow-hidden rounded-full bg-[#e7f2eb] text-base font-bold text-[color:var(--leaf)]">
-                            {person.meta?.image ? (
-                              /* Cloudinary-hosted; next/image isn't configured for that domain. */
-                              /* eslint-disable-next-line @next/next/no-img-element */
-                              <img
-                                src={person.meta.image}
-                                alt={person.title}
-                                className="size-full object-cover"
-                              />
-                            ) : (
-                              (person.title || "?").trim().charAt(0)
-                            )}
-                          </span>
-                          <span className="min-w-0">
-                            <span className="block font-bold text-slate-700">{person.title}</span>
-                            {subtitle ? (
-                              <span className="block text-xs text-slate-400">{subtitle}</span>
-                            ) : null}
-                          </span>
-                        </div>
-                      </td>
-                      {columns.map((field) => (
-                        <td key={field.key} className="px-5 py-3.5">
-                          <Cell field={field} meta={person.meta} />
+                return (
+                  <li key={person._id} className="p-4">
+                    <div className="flex items-start gap-3">
+                      <Avatar person={person} />
+                      <div className="min-w-0 flex-1">
+                        <p className="font-bold break-words text-slate-700">{person.title}</p>
+                        {subtitle ? <p className="text-xs text-slate-400">{subtitle}</p> : null}
+                      </div>
+                      {statusPill(person)}
+                    </div>
+
+                    {columns.length ? (
+                      <dl className="mt-3.5 grid grid-cols-2 gap-x-4 gap-y-3">
+                        {columns.map((field) => (
+                          <div key={field.key} className="min-w-0">
+                            <dt className="text-[0.7rem] font-semibold text-slate-400">
+                              {field.tableLabel || field.label}
+                            </dt>
+                            <dd className="mt-0.5 text-sm break-words">
+                              <Cell field={field} meta={person.meta} />
+                            </dd>
+                          </div>
+                        ))}
+                      </dl>
+                    ) : null}
+
+                    {/* Full-width taps — the table's inline text links are far too
+                        small a target on a phone. */}
+                    <div className="mt-4 flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() => start(person)}
+                        className="flex-1 rounded-xl border border-emerald-700/25 py-2.5 text-sm font-bold text-[color:var(--leaf)] transition hover:bg-[#f0f7f3]"
+                      >
+                        সম্পাদনা
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => remove(person)}
+                        className="flex-1 rounded-xl border border-red-200 py-2.5 text-sm font-bold text-red-600 transition hover:bg-red-50"
+                      >
+                        মুছুন
+                      </button>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+
+            <div className="hidden overflow-x-auto xl:block">
+              <table className="w-full min-w-200 text-left text-sm">
+                <thead className="bg-[#f8faf8] text-xs font-semibold text-slate-500">
+                  <tr>
+                    <th className="px-4 py-3">{noun}</th>
+                    {columns.map((field) => (
+                      <th key={field.key} className="px-4 py-3">
+                        {field.tableLabel || field.label}
+                      </th>
+                    ))}
+                    <th className="px-4 py-3">অবস্থা</th>
+                    <th className="px-4 py-3 text-right">কাজ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {people.map((person) => {
+                    const subtitle = subtitleOf(config, person);
+
+                    return (
+                      <tr key={person._id} className="border-t border-slate-100 align-middle">
+                        <td className="px-4 py-3.5">
+                          <div className="flex items-center gap-3">
+                            <Avatar person={person} />
+                            <span className="min-w-0">
+                              <span className="block font-bold text-slate-700">{person.title}</span>
+                              {subtitle ? (
+                                <span className="block text-xs text-slate-400">{subtitle}</span>
+                              ) : null}
+                            </span>
+                          </div>
                         </td>
-                      ))}
-                      <td className="px-5 py-3.5">
-                        <span
-                          className={cn(
-                            "rounded-full px-2.5 py-1 text-xs font-bold",
-                            statusTones[person.status] || "bg-slate-100 text-slate-600"
-                          )}
-                        >
-                          {statusLabel(person.status)}
-                        </span>
-                      </td>
-                      <td className="space-x-3 px-5 py-3.5 text-right whitespace-nowrap">
-                        <button
-                          type="button"
-                          onClick={() => start(person)}
-                          className="font-bold text-[color:var(--leaf)] hover:underline"
-                        >
-                          সম্পাদনা
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => remove(person)}
-                          className="font-bold text-red-600 hover:underline"
-                        >
-                          মুছুন
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+                        {columns.map((field) => (
+                          <td key={field.key} className="px-4 py-3.5">
+                            <Cell field={field} meta={person.meta} />
+                          </td>
+                        ))}
+                        <td className="px-4 py-3.5">{statusPill(person)}</td>
+                        <td className="space-x-3 px-4 py-3.5 text-right whitespace-nowrap">
+                          <button
+                            type="button"
+                            onClick={() => start(person)}
+                            className="font-bold text-[color:var(--leaf)] hover:underline"
+                          >
+                            সম্পাদনা
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => remove(person)}
+                            className="font-bold text-red-600 hover:underline"
+                          >
+                            মুছুন
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </>
         ) : (
           <div className="p-12 text-center">
             <p className="text-3xl" aria-hidden>
