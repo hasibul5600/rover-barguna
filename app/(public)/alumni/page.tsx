@@ -90,7 +90,7 @@ function ExMemberCard({ member }: { member: ExMember }) {
           {bloodGroup ? (
             <span className="rounded-full bg-red-50 px-2 py-0.5 text-xs font-bold text-red-700">
               <span aria-hidden>🩸 </span>
-              <span className="sr-only">রক্তের গ্রুপ: </span>
+              <span className="sr-only">ব্লাড গ্রুপ: </span>
               {bloodGroup}
             </span>
           ) : null}
