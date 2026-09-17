@@ -40,7 +40,7 @@ export default function Input({
 }: FieldProps & Omit<ComponentProps<"input">, "className" | "children">) {
   return (
     <FieldWrap label={label} error={error} help={help} required={required} className={className}>
-      <input className="field" aria-invalid={error ? true : undefined} required={required} {...rest} />
+      <input className="field focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2" aria-invalid={error ? true : undefined} required={required} {...rest} />
     </FieldWrap>
   );
 }
@@ -56,7 +56,7 @@ export function Textarea({
 }: FieldProps & Omit<ComponentProps<"textarea">, "className" | "children">) {
   return (
     <FieldWrap label={label} error={error} help={help} required={required} className={className}>
-      <textarea className="field resize-y" rows={rows} aria-invalid={error ? true : undefined} required={required} {...rest} />
+      <textarea className="field resize-y focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2" rows={rows} aria-invalid={error ? true : undefined} required={required} {...rest} />
     </FieldWrap>
   );
 }
@@ -76,7 +76,7 @@ export function Select({
 }: FieldProps & { options: SelectOption[]; placeholder?: string } & Omit<ComponentProps<"select">, "className" | "children">) {
   return (
     <FieldWrap label={label} error={error} help={help} required={required} className={className}>
-      <select className="field" aria-invalid={error ? true : undefined} required={required} {...rest}>
+      <select className="field focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2" aria-invalid={error ? true : undefined} required={required} {...rest}>
         <option value="">{placeholder}</option>
         {options.map((option) => {
           const value = typeof option === "string" ? option : option.value;

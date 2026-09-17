@@ -28,7 +28,12 @@ type BaseProps = {
 };
 
 function classes({ variant = "primary", size = "md", className }: BaseProps) {
-  return cn(VARIANTS[variant], SIZES[size], className);
+  return cn(
+    VARIANTS[variant],
+    SIZES[size],
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--cream)]",
+    className
+  );
 }
 
 /** Anchor-flavoured button. Use for navigation. */

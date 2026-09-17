@@ -14,6 +14,7 @@
   --color-cream: #f8f7f0;
   --color-mist: #e7f2eb;
   --color-ink: #13251f;
+  --color-focus-ring: #177054;
 
   --font-bengali: "Hind Siliguri", "Noto Sans Bengali", Arial, sans-serif;
 
@@ -30,6 +31,7 @@
   --gold: #f5bf43;
   --cream: #f8f7f0;
   --ink: #13251f;
+  --focus-ring: #177054;
 }
 
 * {
@@ -231,10 +233,10 @@ p {
     border-color: #cbd8d2;
   }
 
-  .field:focus {
+  .field:focus-visible {
     outline: none;
     border-color: var(--leaf);
-    box-shadow: 0 0 0 3px rgb(23 112 84 / 0.14);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring) 24%, transparent);
   }
 
   .field:disabled {
@@ -247,9 +249,9 @@ p {
     border-color: #dc2626;
   }
 
-  .field-invalid:focus,
-  .field[aria-invalid="true"]:focus {
-    box-shadow: 0 0 0 3px rgb(220 38 38 / 0.14);
+  .field-invalid:focus-visible,
+  .field[aria-invalid="true"]:focus-visible {
+    box-shadow: 0 0 0 3px color-mix(in srgb, #dc2626 24%, transparent);
   }
 
   .field-label {
@@ -285,8 +287,8 @@ p {
    Focus visibility — one consistent ring everywhere.
 --------------------------------------------------------------------------- */
 :where(a, button, input, textarea, select, [tabindex]):focus-visible {
-  outline: 2px solid var(--leaf);
-  outline-offset: 2px;
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
   border-radius: 0.4rem;
 }
 
