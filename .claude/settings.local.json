@@ -38,7 +38,20 @@
       "Bash(curl -s -b tmp-cookie.txt -X PUT 'http://localhost:3000/api/admin/members/6a8f4d2a8a40b1361c573859' -H 'Content-Type: application/json' --data-binary @tmp-clear.json -o tmp-clear-res.json -w 'clear -> %{http_code}\\\\n')",
       "Bash(curl -s -b tmp-cookie.txt 'http://localhost:3000/api/admin/members' -o tmp-mem2.json)",
       "Bash(rm -f tmp-*.json tmp-cookie.txt && ls tmp-* 2>/dev/null; echo \"--- git status ---\"; git status --porcelain)",
-      "Bash(echo \"=== typecheck exit: $? ===\")"
+      "Bash(echo \"=== typecheck exit: $? ===\")",
+      "Bash(xargs wc -l)",
+      "Bash(npm -v)",
+      "Read(//c/Users/hasib/**)",
+      "Bash(touch /c/Users/hasib/.__wtest)",
+      "Bash(rm /c/Users/hasib/.__wtest)",
+      "Bash(npx --yes create-expo-app@latest rover-barguna-app --template default)",
+      "Bash(cd /c/Users/hasib/rover-barguna-app && echo \"--- package.json ---\" && cat package.json && echo \"--- tree \\(excl node_modules\\) ---\" && find . -path ./node_modules -prune -o -path ./.git -prune -o -type f -print | sort && echo \"--- app.json ---\" && cat app.json && echo \"--- tsconfig ---\" && cat tsconfig.json)",
+      "Bash(node -e \"console.log\\(require\\('./node_modules/@expo/vector-icons/package.json'\\).version\\)\")",
+      "Bash(npx --yes expo install @expo/vector-icons)",
+      "Bash(npx expo *)",
+      "Bash(npx next *)",
+      "Bash(curl -s -o - -w \"\\\\nHTTP %{http_code}\\\\n\" -X POST http://localhost:3000/api/requests -H \"Content-Type: application/json\" -d '{\"name\":\"a\",\"email\":\"nope\",\"phone\":\"123\",\"department\":\"ভুল\",\"session\":\"\",\"roll\":\"\",\"bloodGroup\":\"\",\"reason\":\"\"}')",
+      "Bash(curl -s -o - -w \"\\\\nHTTP %{http_code}\\\\n\" -X POST http://localhost:3000/api/contact -H \"Content-Type: application/json\" -d '{\"name\":\"\",\"email\":\"x\",\"phone\":\"5\",\"subject\":\"a\",\"message\":\"short\"}')"
     ]
   }
 }
