@@ -19,6 +19,8 @@ export type ExMemberMeta = {
   passingYear?: string;
   bsId?: string;
   bloodGroup?: string;
+  isBloodDonor?: boolean;
+  lastDonationDate?: string;
   /** Where they are now — job, higher study or business. */
   occupation?: string;
   phone?: string;

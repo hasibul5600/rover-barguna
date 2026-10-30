@@ -73,6 +73,7 @@ export default async function NoticesPage() {
                       {notice.meta.category}
                     </span>
                   ) : null}
+                  {notice.meta.isPinned ? <span className="badge badge-gold">📌 পিন করা</span> : null}
                   {notice.meta.deadline ? (
                     <span className={cn("badge", deadlineLive ? "badge-gold" : "badge-slate")}>
                       শেষ তারিখ {formatBnDate(notice.meta.deadline)}
@@ -109,7 +110,7 @@ export default async function NoticesPage() {
                     rel="noopener noreferrer"
                     className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-[color:var(--leaf)] hover:underline"
                   >
-                    সংযুক্তি দেখুন
+                    {notice.meta.attachment.toLowerCase().includes(".pdf") ? "PDF ডাউনলোড করুন ⬇" : "সংযুক্তি দেখুন"}
                     <span aria-hidden>↗</span>
                   </a>
                 ) : null}

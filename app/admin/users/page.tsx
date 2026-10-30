@@ -1,5 +1,6 @@
 import Link from "next/link";
 import LogoutButton from "@/components/admin/LogoutButton";
+import UsersManager from "@/components/admin/UsersManager";
 import { getAdminSession, isAuthConfigured } from "@/lib/auth";
 import { cn, formatBnDateTime, initial } from "@/lib/utils";
 
@@ -13,6 +14,17 @@ export const dynamic = "force-dynamic";
  */
 export default async function AdminUsersPage() {
   const session = await getAdminSession();
+  if (session?.role === "super_admin") {
+    return (
+      <>
+        <div>
+          <h2 className="text-2xl font-bold text-[color:var(--forest)]">অ্যাডমিন ব্যবহারকারী</h2>
+          <p className="mt-1 text-sm text-slate-500">ভূমিকা, অ্যাক্সেস ও সক্রিয় অবস্থা পরিচালনা করুন।</p>
+        </div>
+        <UsersManager canManage />
+      </>
+    );
+  }
   const email = process.env.ADMIN_EMAIL || "";
   const ready = isAuthConfigured();
 

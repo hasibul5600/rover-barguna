@@ -19,7 +19,7 @@ export async function isAdmin() {
 
 /** True when the server has everything it needs to sign people in. */
 export function isAuthConfigured() {
-  return Boolean(process.env.ADMIN_EMAIL && process.env.ADMIN_PASSWORD && process.env.ADMIN_SESSION_SECRET);
+  return Boolean(process.env.ADMIN_SESSION_SECRET);
 }
 
 export { SESSION_COOKIE };

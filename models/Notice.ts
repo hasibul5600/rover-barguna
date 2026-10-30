@@ -15,6 +15,7 @@ export type NoticeMeta = {
   attachment?: string;
   image?: string;
   cloudinaryId?: string;
+  isPinned?: boolean;
 };
 
 export const NOTICE_CATEGORIES = ["সাধারণ", "জরুরি", "ভর্তি", "ইভেন্ট", "পরীক্ষা", "ছুটি"];
@@ -24,6 +25,7 @@ export const NOTICE_FIELDS: import("@/lib/validators").FieldSpec[] = [
   { name: "category", label: "ধরন", type: "select", options: NOTICE_CATEGORIES, inTable: true },
   { name: "deadline", label: "শেষ তারিখ", type: "date", inTable: true },
   { name: "attachment", label: "সংযুক্তি লিংক", type: "url", placeholder: "" },
+  { name: "isPinned", label: "পিন করা", type: "select", options: ["হ্যাঁ", "না"] },
   { name: "description", label: "বিস্তারিত", type: "textarea", required: true },
 ];
 

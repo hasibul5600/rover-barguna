@@ -38,7 +38,7 @@ function publicStatuses(collection: string) {
 export async function listPublic(collection: string, limit = 100) {
   await connectDb();
   const items = await ContentItem.find({ collection, status: { $in: publicStatuses(collection) } })
-    .sort({ "meta.sortOrder": 1, createdAt: -1 })
+    .sort(collection === "notices" ? { "meta.isPinned": -1, "meta.sortOrder": 1, createdAt: -1 } : { "meta.sortOrder": 1, createdAt: -1 })
     .limit(limit)
     .lean();
   return items.map(shape);

@@ -3,6 +3,9 @@ import connectDb from "@/lib/db";
 import ContentItem from "@/models/ContentItem";
 import { readAdminPayload, requireAdmin, uploadFolder } from "@/lib/adminApi";
 import { deleteCloudinaryImage, uploadDataUrl, uploadImageFile } from "@/lib/cloudinary";
+import { requireRole } from "@/lib/adminApi";
+import { sendMail } from "@/lib/mail";
+import { applicationStatus } from "@/lib/mailTemplates";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -76,6 +79,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ coll
       delete meta.cloudinaryId;
     }
 
+    const statusChanged = collection === "requests" && hasStatus && ["approved", "rejected"].includes(status) && existing.status !== status;
     const item = await ContentItem.findOneAndUpdate(
       { _id: id, collection },
       { title: title.trim(), description, meta, ...(hasStatus ? { status } : {}) },
@@ -84,6 +88,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ coll
 
     // Only bin the old image once the record safely points away from it.
     if (item) await deleteCloudinaryImage(stalePublicId);
+    if (item && statusChanged && typeof meta.email === "string") void sendMail({ to: meta.email, subject: "রোভার স্কাউট আবেদনের হালনাগাদ", html: applicationStatus(item.title, status as "approved" | "rejected") }).catch(console.error);
 
     return item ? NextResponse.json(item) : NextResponse.json({ message: "তথ্য পাওয়া যায়নি" }, { status: 404 });
   } catch (err) {
@@ -93,7 +98,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ coll
 }
 
 export async function DELETE(_: Request, { params }: { params: Promise<{ collection: string; id: string }> }) {
-  const unauthorized = await requireAdmin();
+  const unauthorized = await requireRole(["super_admin", "editor"]);
   if (unauthorized) return unauthorized;
 
   const { collection, id } = await params;

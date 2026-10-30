@@ -3,11 +3,16 @@ import { isAdmin } from "@/lib/auth";
 import { createSubmission, listAll } from "@/lib/publicApi";
 import { firstError, validateJoin } from "@/lib/validators";
 import { JOIN_REQUEST_COLLECTION } from "@/models/JoinRequest";
+import { adminEmail, sendMail } from "@/lib/mail";
+import { adminAlert, applicationReceived } from "@/lib/mailTemplates";
+import { clientIp, rateLimit } from "@/lib/rateLimit";
 
 export const runtime = "nodejs";
 
 /** Public membership application. Lands in the admin panel as a "new" request. */
 export async function POST(request: Request) {
+  const limited = rateLimit(`request:${clientIp(request)}`, 3, 60_000);
+  if (!limited.allowed) return NextResponse.json({ message: "অনেকবার চেষ্টা করা হয়েছে। কিছুক্ষণ পরে চেষ্টা করুন।" }, { status: 429 });
   const body = await request.json().catch(() => null);
   const result = validateJoin(body);
 
@@ -25,6 +30,9 @@ export async function POST(request: Request) {
       { email, phone, department, session, roll, bloodGroup },
       "new"
     );
+    void sendMail({ to: email, subject: "রোভার স্কাউট আবেদন গ্রহণ করা হয়েছে", html: applicationReceived(name) }).catch(console.error);
+    const admin = adminEmail();
+    if (admin) void sendMail({ to: admin, subject: "নতুন রোভার আবেদন", html: adminAlert("নতুন সদস্য আবেদন", `${name} নতুন আবেদন জমা দিয়েছেন।`) }).catch(console.error);
     return NextResponse.json(
       { id, message: "আপনার আবেদন জমা হয়েছে। আমরা শীঘ্রই যোগাযোগ করব।" },
       { status: 201 }

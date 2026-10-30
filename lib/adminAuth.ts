@@ -1,7 +1,8 @@
 const SESSION_COOKIE = "rover_admin_session";
 const SESSION_DURATION_SECONDS = 60 * 60 * 8;
+export type SessionRole = "super_admin" | "editor" | "viewer";
 
-type SessionPayload = { email: string; role: "admin"; exp: number };
+export type SessionPayload = { userId: string; email: string; name: string; role: SessionRole; exp: number };
 
 function bytesToBase64Url(bytes: Uint8Array) {
   let binary = "";
@@ -23,8 +24,8 @@ async function signature(value: string, secret: string) {
   return bytesToBase64Url(new Uint8Array(signed));
 }
 
-export async function createAdminSession(email: string, secret: string) {
-  const payload: SessionPayload = { email, role: "admin", exp: Math.floor(Date.now() / 1000) + SESSION_DURATION_SECONDS };
+export async function createAdminSession(user: Omit<SessionPayload, "exp">, secret: string) {
+  const payload: SessionPayload = { ...user, exp: Math.floor(Date.now() / 1000) + SESSION_DURATION_SECONDS };
   const body = bytesToBase64Url(new TextEncoder().encode(JSON.stringify(payload)));
   return `${body}.${await signature(body, secret)}`;
 }
@@ -40,7 +41,7 @@ export async function verifyAdminSession(token?: string | null, secret?: string)
   if (difference) return null;
   try {
     const payload = JSON.parse(new TextDecoder().decode(base64UrlToBytes(body))) as SessionPayload;
-    return payload.role === "admin" && payload.exp > Math.floor(Date.now() / 1000) ? payload : null;
+    return ["super_admin", "editor", "viewer"].includes(payload.role) && Boolean(payload.userId) && payload.exp > Math.floor(Date.now() / 1000) ? payload : null;
   } catch {
     return null;
   }

@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { SESSION_COOKIE, verifyAdminSession } from "@/lib/adminAuth";
+import type { SessionRole } from "@/lib/adminAuth";
 
 export async function requireAdmin() {
   const session = await verifyAdminSession(
@@ -8,6 +9,12 @@ export async function requireAdmin() {
     process.env.ADMIN_SESSION_SECRET
   );
   return session ? null : NextResponse.json({ message: "অননুমোদিত অনুরোধ" }, { status: 401 });
+}
+
+export async function requireRole(allowedRoles: SessionRole[]) {
+  const session = await verifyAdminSession((await cookies()).get(SESSION_COOKIE)?.value, process.env.ADMIN_SESSION_SECRET);
+  if (!session) return NextResponse.json({ message: "অননুমোদিত অনুরোধ" }, { status: 401 });
+  return allowedRoles.includes(session.role) ? null : NextResponse.json({ message: "এই কাজের অনুমতি নেই।" }, { status: 403 });
 }
 
 export type AdminPayload = {

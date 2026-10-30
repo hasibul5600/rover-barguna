@@ -6,8 +6,9 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const ALLOWED_TYPES = new Set(["image/jpeg", "image/jpg", "image/png", "image/webp", "image/gif"]);
+const ALLOWED_TYPES = new Set(["image/jpeg", "image/jpg", "image/png", "image/webp", "image/gif", "application/pdf"]);
 export const MAX_IMAGE_BYTES = 8 * 1024 * 1024;
+export const MAX_PDF_BYTES = 15 * 1024 * 1024;
 
 export function isCloudinaryConfigured() {
   return Boolean(process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET);
@@ -24,13 +25,13 @@ export async function uploadImageBuffer(buffer: Buffer, folder: string, mimeType
   if (!ALLOWED_TYPES.has(mimeType)) {
     throw new Error("শুধু JPG, PNG, WEBP বা GIF ছবি আপলোড করুন।");
   }
-  if (buffer.length > MAX_IMAGE_BYTES) {
-    throw new Error("ছবির আকার ৮ MB-এর কম হতে হবে।");
+  if (buffer.length > (mimeType === "application/pdf" ? MAX_PDF_BYTES : MAX_IMAGE_BYTES)) {
+    throw new Error(mimeType === "application/pdf" ? "PDF-এর আকার ১৫ MB-এর কম হতে হবে।" : "ছবির আকার ৮ MB-এর কম হতে হবে।");
   }
 
   return new Promise<{ url: string; publicId: string }>((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(
-      { folder, resource_type: "image", overwrite: false },
+      { folder, resource_type: mimeType === "application/pdf" ? "raw" : "image", overwrite: false },
       (error, result) => {
         if (error || !result?.secure_url) {
           reject(new Error(error?.message || "Cloudinary-তে ছবি আপলোড করা যায়নি।"));

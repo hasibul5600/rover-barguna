@@ -18,6 +18,7 @@ export const NAV_LINKS: NavLink[] = [
   { href: "/activities", label: "কার্যক্রম" },
   { href: "/events", label: "ইভেন্ট" },
   { href: "/notices", label: "নোটিশ" },
+  { href: "/blood", label: "রক্তদান", short: "রক্তদান" },
   { href: "/gallery", label: "গ্যালারি" },
   { href: "/contact", label: "যোগাযোগ" },
 ];

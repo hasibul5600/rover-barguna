@@ -77,6 +77,10 @@ const BLOOD_FIELD: PeopleField = {
   inTable: true,
   display: "blood",
 };
+const DONOR_FIELDS: PeopleField[] = [
+  { key: "isBloodDonor", label: "রক্তদানে আগ্রহী", type: "select", options: ["হ্যাঁ", "না"], placeholder: "নির্বাচন করুন", inTable: true },
+  { key: "lastDonationDate", label: "সর্বশেষ রক্তদানের তারিখ", type: "text", placeholder: "YYYY-MM-DD" },
+];
 
 const CONTACT_FIELDS: PeopleField[] = [
   {
@@ -105,6 +109,7 @@ export const MEMBER_PEOPLE: PeopleConfig = {
     { key: "roll", label: "রোল নম্বর", type: "text", placeholder: "" },
     { key: "bsId", label: "বি.এস আইডি", type: "text", placeholder: "", inTable: true },
     BLOOD_FIELD,
+    ...DONOR_FIELDS,
     ...CONTACT_FIELDS,
   ],
   bioLabel: "সংক্ষিপ্ত পরিচিতি",
@@ -126,6 +131,7 @@ export const EX_MEMBER_PEOPLE: PeopleConfig = {
     { key: "passingYear", label: "বিদায়ের বছর", type: "text", placeholder: "" },
     { key: "bsId", label: "বি.এস আইডি", type: "text", placeholder: "", inTable: true },
     BLOOD_FIELD,
+    ...DONOR_FIELDS,
     { key: "occupation", label: "বর্তমান পেশা / কর্মস্থল", type: "text", placeholder: "", inTable: true, tableLabel: "বর্তমান অবস্থান" },
     ...CONTACT_FIELDS,
   ],

@@ -11,6 +11,8 @@ export type MemberMeta = {
   roll?: string;
   bsId?: string;
   bloodGroup?: string;
+  isBloodDonor?: boolean;
+  lastDonationDate?: string;
   phone?: string;
   email?: string;
   role?: string;
@@ -39,6 +41,8 @@ export const MEMBER_FIELDS: FieldSpec[] = [
   { name: "roll", label: "রোল নম্বর", type: "text", placeholder: "" },
   { name: "bsId", label: "বি.এস আইডি", type: "text", placeholder: "", inTable: true },
   { name: "bloodGroup", label: "রক্তের গ্রুপ", type: "select", options: BLOOD_GROUPS, inTable: true },
+  { name: "isBloodDonor", label: "রক্তদানে আগ্রহী", type: "select", options: ["হ্যাঁ", "না"] },
+  { name: "lastDonationDate", label: "সর্বশেষ রক্তদানের তারিখ", type: "date" },
   { name: "phone", label: "মোবাইল", type: "tel", placeholder: "", inTable: true },
   { name: "email", label: "ইমেইল", type: "email", placeholder: "" },
   { name: "description", label: "সংক্ষিপ্ত পরিচিতি", type: "textarea" },
