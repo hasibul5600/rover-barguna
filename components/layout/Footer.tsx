@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { toBn } from "@/lib/utils";
+import { GROUP_EMAIL, GROUP_PHONE, GROUP_PHONE_DISPLAY } from "@/lib/site";
 
 const QUICK_LINKS: Array<[string, string]> = [
   ["/about", "আমাদের সম্পর্কে"],
@@ -60,11 +61,11 @@ export default function Footer() {
             <p className="font-bold text-[#f5bf43]">যোগাযোগ</p>
             <address className="mt-4 grid gap-2 text-sm leading-6 text-white/75 not-italic">
               <span>বরগুনা পলিটেকনিক ইনস্টিটিউট, বরগুনা সদর, বরগুনা ৮৭০০</span>
-              <a href="mailto:roverbarguna@gmail.com" className="link-underline break-all hover:text-white">
-                roverbarguna@gmail.com
+              <a href={`mailto:${GROUP_EMAIL}`} className="link-underline break-all hover:text-white">
+                {GROUP_EMAIL}
               </a>
-              <a href="tel:01700000000" className="link-underline hover:text-white">
-                ০১৭০০-০০০০০০
+              <a href={`tel:${GROUP_PHONE}`} className="link-underline hover:text-white">
+                {GROUP_PHONE_DISPLAY}
               </a>
             </address>
           </div>

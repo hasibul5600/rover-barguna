@@ -31,6 +31,7 @@ const MAX_BYTES = 8 * 1024 * 1024;
 
 /** Roles get a colour so the list is scannable at a glance. */
 const ROLE_TONE: Record<string, string> = {
+  "গ্রুপ সভাপতি (পদাধিকারবলে অধ্যক্ষ)": "bg-[#fff4d6] text-[#8a5a00]",
   "রোভার স্কাউট লিডার": "bg-[#f0e6ff] text-[#5b21b6]",
   "সিনিয়র রোভার মেট": "bg-[#fdf0d5] text-[#92400e]",
   "রোভার মেট": "bg-[#e7f2eb] text-[color:var(--forest)]",

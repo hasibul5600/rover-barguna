@@ -36,6 +36,11 @@ export const SITE_NAME = "বরগুনা পলিটেকনিক ইন�
 export const SITE_SHORT_NAME = "রোভার স্কাউট বরগুনা";
 export const SITE_DESCRIPTION = "সেবা, নেতৃত্ব ও ভ্রাতৃত্বের পথে এগিয়ে চলি।";
 
+/** Official public contact channels for the Rover Scout Group. */
+export const GROUP_EMAIL = "bgpirsgrover@gmail.com";
+export const GROUP_PHONE = "01570224994";
+export const GROUP_PHONE_DISPLAY = "০১৫৭০-২২৪৯৯৪";
+
 /** Brand green — also the browser theme colour on mobile. */
 export const BRAND_COLOR = "#073b2c";
 

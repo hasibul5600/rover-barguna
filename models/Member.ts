@@ -25,6 +25,7 @@ export type MemberMeta = {
  * order, so a change here changes how that page is laid out.
  */
 export const MEMBER_ROLES = [
+  "গ্রুপ সভাপতি (পদাধিকারবলে অধ্যক্ষ)",
   "রোভার স্কাউট লিডার",
   "সিনিয়র রোভার মেট",
   "রোভার মেট",

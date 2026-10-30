@@ -1,5 +1,6 @@
 import ContactForm from "@/components/forms/ContactForm";
 import PageHeader from "@/components/layout/PageHeader";
+import { GROUP_EMAIL, GROUP_PHONE, GROUP_PHONE_DISPLAY } from "@/lib/site";
 
 export const metadata = {
   title: "যোগাযোগ | রোভার স্কাউট গ্রুপ",
@@ -15,14 +16,14 @@ const CHANNELS = [
   {
     icon: "✉",
     label: "ইমেইল",
-    lines: ["roverbarguna@gmail.com"],
-    href: "mailto:roverbarguna@gmail.com",
+    lines: [GROUP_EMAIL],
+    href: `mailto:${GROUP_EMAIL}`,
   },
   {
     icon: "☏",
     label: "মোবাইল",
-    lines: ["০১৭০০-০০০০০০"],
-    href: "tel:01700000000",
+    lines: [GROUP_PHONE_DISPLAY],
+    href: `tel:${GROUP_PHONE}`,
   },
   {
     icon: "◷",

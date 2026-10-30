@@ -113,7 +113,7 @@ export default async function LeadershipPage() {
       <PageHeader
         kicker="আমাদের দল"
         title="নেতৃত্ব ও সদস্যবৃন্দ"
-        lead="যাঁরা প্রতিদিন এই গ্রুপকে এগিয়ে নিয়ে যাচ্ছেন — রোভার মেট থেকে শুরু করে প্রতিটি সদস্য।"
+        lead="পদাধিকারবলে প্রতিষ্ঠানের অধ্যক্ষ গ্রুপ সভাপতি; তাঁর নেতৃত্বে রোভার স্কাউট লিডার, রোভার মেট ও সদস্যরা গ্রুপকে এগিয়ে নিয়ে যাচ্ছেন।"
         action={
           members.length ? <span className="badge badge-green">মোট {toBn(members.length)} জন</span> : undefined
         }

@@ -21,22 +21,26 @@ export async function POST(request: Request) {
   await connectDb();
   let user = await User.findOne({ email: email.toLowerCase(), isActive: true }).lean();
 
-  // Seamless migration for existing deployments: when no database accounts have
-  // been created yet, accept the former environment-based administrator once
-  // and persist a properly hashed super-admin account.
-  if (!user && (await User.countDocuments()) === 0) {
-    const legacyEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();
-    const legacyPassword = process.env.ADMIN_PASSWORD;
-    if (legacyEmail && legacyPassword && email.toLowerCase() === legacyEmail && password === legacyPassword) {
-      const created = await User.create({
-        name: "Super Admin",
-        email: legacyEmail,
-        passwordHash: await hashPassword(legacyPassword),
-        role: "super_admin",
-        isActive: true,
-      });
-      user = created.toObject();
-    }
+  // Seamless migration/recovery for existing deployments. The configured legacy
+  // credentials remain an emergency bootstrap path, so an older or partially
+  // seeded record cannot permanently lock the original site owner out.
+  const legacyEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+  const legacyPassword = process.env.ADMIN_PASSWORD;
+  if (legacyEmail && legacyPassword && email.toLowerCase() === legacyEmail && password === legacyPassword) {
+    const migrated = await User.findOneAndUpdate(
+      { email: legacyEmail },
+      {
+        $set: {
+          name: user?.name || "Super Admin",
+          passwordHash: await hashPassword(legacyPassword),
+          role: "super_admin",
+          isActive: true,
+        },
+        $setOnInsert: { email: legacyEmail },
+      },
+      { new: true, upsert: true, setDefaultsOnInsert: true }
+    ).lean();
+    user = migrated;
   }
   if (!user || !(await comparePassword(password, user.passwordHash))) {
     rateLimit(limiterKey, 5, 60_000);
