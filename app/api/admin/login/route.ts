@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { createAdminSession, SESSION_COOKIE, SESSION_DURATION_SECONDS } from "@/lib/adminAuth";
 import connectDb from "@/lib/db";
 import User from "@/models/User";
-import { comparePassword } from "@/lib/password";
+import { comparePassword, hashPassword } from "@/lib/password";
 import { clientIp, isRateLimited, rateLimit, resetRateLimit } from "@/lib/rateLimit";
 
 export async function POST(request: Request) {
@@ -19,7 +19,25 @@ export async function POST(request: Request) {
   }
 
   await connectDb();
-  const user = await User.findOne({ email: email.toLowerCase(), isActive: true }).lean();
+  let user = await User.findOne({ email: email.toLowerCase(), isActive: true }).lean();
+
+  // Seamless migration for existing deployments: when no database accounts have
+  // been created yet, accept the former environment-based administrator once
+  // and persist a properly hashed super-admin account.
+  if (!user && (await User.countDocuments()) === 0) {
+    const legacyEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+    const legacyPassword = process.env.ADMIN_PASSWORD;
+    if (legacyEmail && legacyPassword && email.toLowerCase() === legacyEmail && password === legacyPassword) {
+      const created = await User.create({
+        name: "Super Admin",
+        email: legacyEmail,
+        passwordHash: await hashPassword(legacyPassword),
+        role: "super_admin",
+        isActive: true,
+      });
+      user = created.toObject();
+    }
+  }
   if (!user || !(await comparePassword(password, user.passwordHash))) {
     rateLimit(limiterKey, 5, 60_000);
     return NextResponse.json({ message: "ইমেইল অথবা পাসওয়ার্ড সঠিক নয়।" }, { status: 401 });
