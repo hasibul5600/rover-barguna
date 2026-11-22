@@ -55,6 +55,10 @@ npm run build       # production build
 | `ADMIN_EMAIL` | yes | Admin login email |
 | `ADMIN_PASSWORD` | yes | Admin login password — use a long, unique one |
 | `ADMIN_SESSION_SECRET` | yes | Signs the session cookie. **32+ characters.** |
+| `GOOGLE_CLIENT_ID` | member login | Google OAuth web-client ID |
+| `GOOGLE_CLIENT_SECRET` | member login | Google OAuth web-client secret |
+| `GOOGLE_REDIRECT_URI` | member login | Exact callback URL, e.g. `https://your-domain.com/api/member/auth/callback` |
+| `MEMBER_SESSION_SECRET` | member login | Signs member sessions. **32+ characters; use a separate value.** |
 | `MONGODB_URI` | yes | MongoDB Atlas connection string |
 | `CLOUDINARY_CLOUD_NAME` | yes | Gallery uploads |
 | `CLOUDINARY_API_KEY` | yes | Gallery uploads |
@@ -78,6 +82,13 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
    **Settings → Environment Variables**, for the Production **and** Preview
    environments.
 4. Deploy.
+
+### Member Gmail login
+
+1. In Google Cloud Console, create an **OAuth client ID** of type **Web application**.
+2. Add `https://your-domain.com/api/member/auth/callback` under **Authorized redirect URIs**. For local development, also add `http://localhost:3000/api/member/auth/callback`.
+3. Add the four Google/member variables from the table above in Vercel, then redeploy.
+4. In `/admin/members`, create or edit a member and enter their Gmail in **ইমেইল / Gmail**. That address can immediately sign in at `/member/login`; duplicate Gmail addresses are rejected.
 
 ### Two things that will otherwise break production
 

@@ -63,6 +63,13 @@ export default async function AdminSettingsPage() {
         ? "লগইন কুকি HMAC দিয়ে স্বাক্ষরিত।"
         : "ADMIN_SESSION_SECRET ছাড়া লগইন কাজ করবে না।",
     },
+    {
+      label: "সদস্য Gmail লগইন",
+      ok: configured("GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET", "GOOGLE_REDIRECT_URI", "MEMBER_SESSION_SECRET"),
+      detail: configured("GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET", "GOOGLE_REDIRECT_URI", "MEMBER_SESSION_SECRET")
+        ? "Google OAuth ও সদস্য পোর্টালের সেশন কনফিগার করা আছে।"
+        : "GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REDIRECT_URI ও MEMBER_SESSION_SECRET সেট করুন।",
+    },
   ];
 
   const healthy = checks.filter((check) => check.ok).length;
@@ -155,6 +162,7 @@ export default async function AdminSettingsPage() {
             <ul className="mt-3 grid gap-2 text-sm leading-6 text-white/85">
               <li>• পাসওয়ার্ড ও API কী কেবল সার্ভারে থাকে, ব্রাউজারে কখনো পাঠানো হয় না।</li>
               <li>• লগইন সেশন ৮ ঘণ্টা পর নিজে থেকেই শেষ হয়ে যায়।</li>
+              <li>• সদস্যকে পোর্টাল access দিতে সদস্য তালিকায় তার Gmail যোগ করুন। একই Gmail একবারই ব্যবহার করা যাবে।</li>
               <li>• গ্যালারির ছবি Cloudinary-তে থাকে; মুছলে সেখান থেকেও মুছে যায়।</li>
             </ul>
           </article>

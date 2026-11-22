@@ -76,8 +76,18 @@ export async function POST(request: Request, { params }: { params: Promise<{ col
   const { title, description, status, file } = payload;
   let meta = payload.meta;
 
+  // A member's Gmail is their member-portal identity. Normalize it here rather
+  // than relying on the browser, then reserve it for one member only.
+  if (collection === "members" && typeof meta.email === "string") meta.email = meta.email.trim().toLowerCase();
+
   if (!title.trim()) {
     return NextResponse.json({ message: "শিরোনাম প্রয়োজন।" }, { status: 400 });
+  }
+
+  if (collection === "members" && typeof meta.email === "string" && meta.email) {
+    await connectDb();
+    const emailInUse = await ContentItem.exists({ collection: "members", "meta.email": meta.email });
+    if (emailInUse) return NextResponse.json({ message: "এই Gmail ইতিমধ্যে অন্য সদস্যের জন্য যোগ করা আছে।" }, { status: 409 });
   }
 
   let uploadedPublicId: string | null = null;

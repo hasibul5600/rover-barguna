@@ -92,13 +92,13 @@ const CONTACT_FIELDS: PeopleField[] = [
     tableLabel: "যোগাযোগ",
     display: "contact",
   },
-  { key: "email", label: "ইমেইল", type: "email", placeholder: "" },
+  { key: "email", label: "ইমেইল / Gmail", type: "email", placeholder: "" },
 ];
 
 export const MEMBER_PEOPLE: PeopleConfig = {
   collection: MEMBER_COLLECTION,
   noun: "সদস্য",
-  intro: "নাম, পদবি, রক্তের গ্রুপ ও ছবি সহ তথ্য যোগ করুন — সবকিছু নেতৃত্ব পাতায় দেখা যাবে।",
+  intro: "নাম, পদবি, রক্তের গ্রুপ ও ছবি সহ তথ্য যোগ করুন — সবকিছু নেতৃত্ব পাতায় দেখা যাবে। সদস্যের Gmail এখানে যোগ করলে সেই Gmail দিয়েই সদস্য পোর্টালে লগইন করা যাবে।",
   emptyIcon: "👥",
   namePlaceholder: "",
   subtitleKeys: ["session", "roll", "bsId"],

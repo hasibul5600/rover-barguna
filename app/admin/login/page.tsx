@@ -50,6 +50,9 @@ function LoginForm() {
               ইমেইল
               <input
                 type="email"
+                // Some browser extensions add fdprocessedid before React hydrates.
+                // This controlled field deliberately ignores that external attribute.
+                suppressHydrationWarning
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -61,6 +64,7 @@ function LoginForm() {
               পাসওয়ার্ড
               <input
                 type="password"
+                suppressHydrationWarning
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}

@@ -71,10 +71,10 @@ export default function Navbar() {
 
         <div className="flex items-center gap-2">
           <Link
-            href="/admin/login"
+            href="/member/login"
             className="hidden rounded-full px-3 py-2 text-sm font-bold text-[color:var(--forest)] transition hover:bg-emerald-950/5 sm:block"
           >
-            লগইন
+            সদস্য লগইন
           </Link>
           <Link href="/join" className="btn-primary hidden text-sm whitespace-nowrap sm:inline-flex">
             সদস্য হোন →

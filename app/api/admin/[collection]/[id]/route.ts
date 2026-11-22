@@ -39,6 +39,12 @@ export async function PUT(request: Request, { params }: { params: Promise<{ coll
     const previous: Record<string, unknown> = existing.meta ? { ...existing.meta } : {};
     const { removeImage, ...submitted } = payload.meta;
 
+    if (collection === "members" && typeof submitted.email === "string") submitted.email = submitted.email.trim().toLowerCase();
+    if (collection === "members" && typeof submitted.email === "string" && submitted.email) {
+      const emailInUse = await ContentItem.exists({ collection: "members", "meta.email": submitted.email, _id: { $ne: id } });
+      if (emailInUse) return NextResponse.json({ message: "এই Gmail ইতিমধ্যে অন্য সদস্যের জন্য যোগ করা আছে।" }, { status: 409 });
+    }
+
     // Merge rather than replace: the generic admin form posts only title/description/
     // status, and that must not wipe a record's department, role or phone.
     let meta: Record<string, unknown> = {

@@ -81,10 +81,10 @@ export default function Sidebar() {
             সদস্য হোন →
           </Link>
           <Link
-            href="/admin/login"
+            href="/member/login"
             className="mt-2 block rounded-xl px-4 py-2.5 text-center text-sm font-bold text-slate-500 transition hover:bg-emerald-950/5"
           >
-            অ্যাডমিন লগইন
+            সদস্য লগইন
           </Link>
         </div>
       </aside>

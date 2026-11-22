@@ -37,7 +37,7 @@ async function getMembers(): Promise<Member[]> {
 function MemberCard({ member }: { member: Member }) {
   const { role, department, session, bsId, bloodGroup, image, email, phone } = member.meta;
 
-  const subtitle = [department, session, bsId ? `বি.এস: ${bsId}` : null].filter(Boolean).join(" · ") || "রোভার স্কাউট গ্রুপ";
+  const subtitle = [department, session, bsId ? `বি.এস: ${bsId}` : null].filter(Boolean).join(" · ");
 
   return (
     <article className="surface surface-hover flex h-full flex-col justify-between overflow-hidden">
@@ -59,7 +59,7 @@ function MemberCard({ member }: { member: Member }) {
           <h3 className="mt-1 font-bold text-[color:var(--forest)]">{member.title}</h3>
 
           <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
-            <p className="text-sm text-slate-500">{subtitle}</p>
+            {subtitle ? <p className="text-sm text-slate-500">{subtitle}</p> : null}
             {/* Latin letters on purpose — blood groups are written "A+"/"O-" everywhere in
                 Bangladesh, and the group needs them readable during a blood drive. */}
             {bloodGroup ? (

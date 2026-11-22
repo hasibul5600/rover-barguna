@@ -63,7 +63,7 @@ function groupByYear(members: ExMember[]) {
 function ExMemberCard({ member }: { member: ExMember }) {
   const { role, department, session, bsId, passingYear, bloodGroup, occupation, image, email, phone } = member.meta;
 
-  const subtitle = [department, session, bsId ? `বি.এস: ${bsId}` : null].filter(Boolean).join(" · ") || "রোভার স্কাউট গ্রুপ";
+  const subtitle = [department, session, bsId ? `বি.এস: ${bsId}` : null].filter(Boolean).join(" · ");
 
   return (
     <article className="surface surface-hover flex h-full flex-col justify-between overflow-hidden">
@@ -87,7 +87,7 @@ function ExMemberCard({ member }: { member: ExMember }) {
           <h3 className="mt-1 font-bold text-[color:var(--forest)]">{member.title}</h3>
 
           <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
-            <p className="text-sm text-slate-500">{subtitle}</p>
+            {subtitle ? <p className="text-sm text-slate-500">{subtitle}</p> : null}
             {bloodGroup ? (
               <span className="rounded-full bg-red-50 px-2 py-0.5 text-xs font-bold text-red-700">
                 <span aria-hidden>🩸 </span>
