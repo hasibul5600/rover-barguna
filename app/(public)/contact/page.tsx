@@ -1,6 +1,6 @@
 import ContactForm from "@/components/forms/ContactForm";
 import PageHeader from "@/components/layout/PageHeader";
-import { GROUP_EMAIL, GROUP_PHONE, GROUP_PHONE_DISPLAY } from "@/lib/site";
+import { GROUP_EMAIL, GROUP_FACEBOOK_URL, GROUP_PHONE, GROUP_PHONE_DISPLAY, GROUP_WHATSAPP_URL } from "@/lib/site";
 
 export const metadata = {
   title: "যোগাযোগ | রোভার স্কাউট গ্রুপ",
@@ -24,6 +24,18 @@ const CHANNELS = [
     label: "মোবাইল",
     lines: [GROUP_PHONE_DISPLAY],
     href: `tel:${GROUP_PHONE}`,
+  },
+  {
+    icon: "◉",
+    label: "হোয়াটসঅ্যাপ",
+    lines: ["হোয়াটসঅ্যাপে বার্তা পাঠান"],
+    href: GROUP_WHATSAPP_URL,
+  },
+  {
+    icon: "f",
+    label: "Facebook",
+    lines: ["আমাদের Facebook পেজ দেখুন"],
+    href: GROUP_FACEBOOK_URL,
   },
   {
     icon: "◷",
@@ -89,6 +101,8 @@ export default function ContactPage() {
                     <a
                       key={line}
                       href={channel.href}
+                      target={channel.href.startsWith("https://") ? "_blank" : undefined}
+                      rel={channel.href.startsWith("https://") ? "noreferrer" : undefined}
                       className="mt-0.5 block text-sm font-semibold break-all text-slate-700 hover:text-[color:var(--leaf)]"
                     >
                       {line}

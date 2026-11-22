@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { toBn } from "@/lib/utils";
-import { GROUP_EMAIL, GROUP_PHONE, GROUP_PHONE_DISPLAY } from "@/lib/site";
+import { GROUP_EMAIL, GROUP_FACEBOOK_URL, GROUP_PHONE, GROUP_PHONE_DISPLAY, GROUP_WHATSAPP_URL } from "@/lib/site";
 
 const QUICK_LINKS: Array<[string, string]> = [
   ["/about", "আমাদের সম্পর্কে"],
@@ -66,6 +66,12 @@ export default function Footer() {
               </a>
               <a href={`tel:${GROUP_PHONE}`} className="link-underline hover:text-white">
                 {GROUP_PHONE_DISPLAY}
+              </a>
+              <a href={GROUP_WHATSAPP_URL} target="_blank" rel="noreferrer" className="link-underline hover:text-white">
+                হোয়াটসঅ্যাপে যোগাযোগ করুন
+              </a>
+              <a href={GROUP_FACEBOOK_URL} target="_blank" rel="noreferrer" className="link-underline hover:text-white">
+                আমাদের Facebook পেজ
               </a>
             </address>
           </div>

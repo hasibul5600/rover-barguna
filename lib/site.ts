@@ -40,6 +40,9 @@ export const SITE_DESCRIPTION = "সেবা, নেতৃত্ব ও ভ্�
 export const GROUP_EMAIL = "bgpirsgrover@gmail.com";
 export const GROUP_PHONE = "01570224994";
 export const GROUP_PHONE_DISPLAY = "০১৫৭০-২২৪৯৯৪";
+/** WhatsApp requires the international country code, without a leading +. */
+export const GROUP_WHATSAPP_URL = "https://wa.me/8801570224994";
+export const GROUP_FACEBOOK_URL = "https://web.facebook.com/bds.bpirsg";
 
 /** Brand green — also the browser theme colour on mobile. */
 export const BRAND_COLOR = "#073b2c";
